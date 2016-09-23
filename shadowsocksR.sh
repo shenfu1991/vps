@@ -213,10 +213,10 @@ cat > /etc/shadowsocks.json<<-EOF
 "timeout": 120,
 "udp_timeout": 60,
 "method": "aes-256-cfb",
-"protocol": "auth_sha1_v3_compatible",
+"protocol": "auth_sha1_compatible",
 "protocol_param": "",
-"obfs": "tls1.2_ticket_auth_compatible",
-"obfs_param": "",
+"obfs": "http_simple_compatible",
+"obfs_param": "www.youku.com",
 "dns_ipv6": false,
 "connect_verbose_info": 0,
 "redirect": "",
@@ -259,8 +259,8 @@ echo -e "Server Port: \033[41;37m ${shadowsocksport} \033[0m"
 echo -e "Password: \033[41;37m ${shadowsockspwd} \033[0m"
 echo -e "Local IP: \033[41;37m 127.0.0.1 \033[0m"
 echo -e "Local Port: \033[41;37m 1080 \033[0m"
-echo -e "Protocol: \033[41;37m auth_sha1_v3 \033[0m"
-echo -e "obfs: \033[41;37m tls1.2_ticket_auth \033[0m"
+echo -e "Protocol: \033[41;37m auth_sha1 \033[0m"
+echo -e "obfs: \033[41;37m http_simple \033[0m"
 echo -e "Encryption Method: \033[41;37m aes-256-cfb \033[0m"
 echo
 echo "Welcome to visit:https://shadowsocks.be/9.html"
