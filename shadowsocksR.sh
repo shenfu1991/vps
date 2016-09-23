@@ -216,7 +216,7 @@ cat > /etc/shadowsocks.json<<-EOF
 "protocol": "auth_sha1_compatible",
 "protocol_param": "",
 "obfs": "http_simple_compatible",
-"obfs_param": "www.youku.com",
+"obfs_param": "",
 "dns_ipv6": false,
 "connect_verbose_info": 0,
 "redirect": "",
