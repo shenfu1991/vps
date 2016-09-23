@@ -53,10 +53,15 @@ centos6.5  选7  996
 
 SSR
 
-wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadowsocksR.sh && bash shadowsocksR.sh
-启动：/etc/init.d/shadowsocks start 停止：/etc/init.d/shadowsocks stop 重启：/etc/init.d/shadowsocks restart 状态：/etc/init.d/shadowsocks status
+wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vps/master/shadowsocksR.sh && bash shadowsocksR.sh
+启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status
 卸载：./shadowsocksR.sh uninstall
-配置文件路径：/etc/shadowsocks.json 日志文件路径：/var/log/shadowsocks.log 安装路径：/usr/local/shadowsocks/shadowsoks
+配置文件路径：/etc/shadowsocks.json
+日志文件路径：/var/log/shadowsocks.log
+安装路径：/usr/local/shadowsocks/shadowsoks
 
 
 查看占用
@@ -113,6 +118,10 @@ chmod +x shadowsocks-go.sh
     "method": "aes-256-cfb",
     "timeout": 600
 }
+
+
+
+
 
 
 
