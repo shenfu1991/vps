@@ -204,25 +204,24 @@ echo "firewall set completed..."
 function config_shadowsocks(){
 cat > /etc/shadowsocks.json<<-EOF
 {
-"server": "0.0.0.0",
-"server_ipv6": "::",
-"server_port": ${shadowsocksport},
-"local_address": "127.0.0.1",
-"local_port": 1081,
-"password": "${shadowsockspwd}",
-"timeout": 120,
-"udp_timeout": 60,
-"method": "aes-256-cfb",
+"server":"0.0.0.0",
+"server_ipv6": "[::]",
+"local_address":"127.0.0.1",
+"local_port":1080,
+"port_password":{
+"8888":"shenfu",
+"9999":"xuanyuan"
+},
+"timeout":300,
+"method":"aes-256-cfb",
 "protocol": "auth_sha1_compatible",
 "protocol_param": "",
 "obfs": "http_simple_compatible",
 "obfs_param": "",
-"dns_ipv6": false,
-"connect_verbose_info": 0,
 "redirect": "",
+"dns_ipv6": false,
 "fast_open": false,
 "workers": 1
-
 }
 EOF
 }
