@@ -103,5 +103,5 @@ chmod +x shadowsocks-go.sh
 }
 
 
-dx0MchH8xBS71FX53e
+F0VvdL3f49aJYQdu12
 
