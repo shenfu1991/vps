@@ -1,5 +1,3 @@
-# vps
-
 net speeder加速
 wget --no-check-certificate https://gist.github.com/LazyZhu/dc3f2f84c336a08fd6a5/raw/d8aa4bcf955409e28a262ccf52921a65fe49da99/net_speeder_lazyinstall.sh
 sh net_speeder_lazyinstall.sh
@@ -90,18 +88,34 @@ chmod +x shadowsocks-go.sh
 状态：/etc/init.d/shadowsocks status
 
 配置文件路径：vi /etc/shadowsocks/config.json
+
 {
-    "port_password":{
-         "8989":"password0",
-         "9001":"password1",
-         "9002":"password2",
-         "9003":"password3",
-         "9004":"password4"
-    },
+    "server":"0.0.0.0",
+    "server_port":9999,
+    "local_port":1080,
+    "password":"shenfu1991",
     "method":"aes-256-cfb",
     "timeout":600
 }
 
+{
+    "port_password": {
+        "9999": "shenfu1991",
+        "8888": "shenfu1991",
+        "7777": "shenfu1991",
+        "6666": "shenfu1991",
+        "5555": "shenfu1991",
+        "4444": "shenfu1991",
+        "3333": "shenfu1991",
+        "2222": "shenfu1991",
+        "1111": "shenfu1991"
+    },
+    "method": "aes-256-cfb",
+    "timeout": 600
+}
 
-F0VvdL3f49aJYQdu12
+
+
+
+4pqe3K03ZHAs5X9bdB
 
