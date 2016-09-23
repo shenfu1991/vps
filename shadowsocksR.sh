@@ -209,8 +209,15 @@ cat > /etc/shadowsocks.json<<-EOF
 "local_address":"127.0.0.1",
 "local_port":1080,
 "port_password":{
-"8888":"shenfu",
-"9999":"xuanyuan"
+"9999": "shenfu1991",
+"8888": "shenfu1991",
+"7777": "shenfu1991",
+"6666": "shenfu1991",
+"5555": "shenfu1991",
+"4444": "shenfu1991",
+"3333": "shenfu1991",
+"2222": "shenfu1991",
+"1111": "shenfu1991"
 },
 "timeout":300,
 "method":"aes-256-cfb",
