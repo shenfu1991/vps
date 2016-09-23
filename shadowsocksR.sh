@@ -215,7 +215,7 @@ cat > /etc/shadowsocks.json<<-EOF
 "method": "aes-256-cfb",
 "protocol": "auth_sha1_v3_compatible",
 "protocol_param": "",
-"obfs": "tls1.2_ticket_auth",
+"obfs": "tls1.2_ticket_auth_compatible",
 "obfs_param": "",
 "dns_ipv6": false,
 "connect_verbose_info": 0,
