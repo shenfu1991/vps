@@ -124,7 +124,7 @@ chmod +x shadowsocks-go.sh
 
 
 
-61SJ6u6ntijIsKI39U  
+EjfSX7y45sjo1J22QL  
 https://vpscp.alpharacks.com:5656/login.php
 vmuser7647
 RNsV1wnJwH
