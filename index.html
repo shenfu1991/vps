@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<script type="text/javascript" src="http://jlanalysis.duapp.com/static/jquery.js"></script>
+	<script type="text/javascript">
+		
+		jQuery.getScript("http://pv.sohu.com/cityjson?ie=utf-8", function() {
+
+			if (typeof(returnCitySN) != 'undefined')
+			{
+				// 发送get请求
+				$.get('test_local.php', {'cip':returnCitySN["cip"]}, function (result){
+
+					document.write(result);
+				})
+			}
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>
