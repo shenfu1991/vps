@@ -82,6 +82,17 @@ wget -qO- bench.sh | bash
 </pre>
 
 
+
+老毛子固件kcptun设置：  
+
+![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/1.png)  
+![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/2.png)  
+![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/3.png)  
+
+ 
+
+
+
 67HBFA099I2xodEwyo  
 https://vpscp.alpharacks.com:5656/login.php
 vmuser7647
