@@ -60,7 +60,7 @@ lsof -i:80
 
 ###kcptun     
 <pre>
-wget https://github.com/xtaci/kcptun/releases/download/v20160922/kcptun-linux-amd64-20160922.tar.gz  
+wget https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-linux-amd64-20161009.tar.gz   
 tar zxvf kcptun-linux-amd64-20160922.tar.gz  
 </pre>
 
@@ -69,10 +69,15 @@ tar zxvf kcptun-linux-amd64-20160922.tar.gz
 ./server_linux_amd64 -l ":554" -t "127.0.0.1:9999" -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2  -key gouzhongzhudi -crypt aes-128    
 </pre>
 
+客户端程序：  
+<pre>
+macOS:https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-darwin-amd64-20161009.tar.gz    
+windows:https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-windows-amd64-20161009.tar.gz  
+</pre>
 
 客户端运行：  
 <pre>
-client_windows_amd64.exe -l "127.0.0.1:8388" -r "ngrokd.ml:554" -mtu 1400 -sndwnd 256 -rcvwnd 2048 -mode fast2 -key gouzhongzhudi -crypt aes-128    
+client_windows_amd64.exe -l "127.0.0.1:8388" -r "ngrokd.ml:554" -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2  -key gouzhongzhudi -crypt aes-128   
 </pre>
 
 
