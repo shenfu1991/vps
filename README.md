@@ -71,8 +71,8 @@ tar zxvf kcptun-linux-amd64-20160922.tar.gz
 
 客户端程序：  
 <pre>
-macOS:https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-darwin-amd64-20161009.tar.gz    
-windows:https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-windows-amd64-20161009.tar.gz  
+macOS:  https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-darwin-amd64-20161009.tar.gz    
+windows:  https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-windows-amd64-20161009.tar.gz  
 </pre>
 
 客户端运行：  
