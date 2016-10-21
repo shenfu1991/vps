@@ -61,7 +61,7 @@ lsof -i:80
 ###kcptun     
 <pre>
 wget https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-linux-amd64-20161009.tar.gz   
-tar zxvf kcptun-linux-amd64-20160922.tar.gz  
+tar zxvf kcptun-linux-amd64-20161009.tar.gz   
 </pre>
 
 服务器启动：   
