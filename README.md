@@ -102,3 +102,5 @@ wget -qO- bench.sh | bash
 https://vpscp.alpharacks.com:5656/login.php
 vmuser7647
 RNsV1wnJwH
+https://panel.cloudatcost.com/login.php
+a7e2YzAByp
