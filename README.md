@@ -40,29 +40,17 @@ crontab -e
  wget --no-check-certificate  https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh && bash serverspeeder-all.sh  
 </pre>  
  
-启动锐速：
- <pre>
-/serverspeeder/bin/serverSpeeder.sh start
-</pre>
 
-停止锐速：
-<pre>
-/serverspeeder/bin/serverSpeeder.sh stop
-</pre>
+<pre> 
+启动锐速：/serverspeeder/bin/serverSpeeder.sh start
 
-查看锐速是否正常运行
-<pre>
-service serverSpeeder status
-</pre>
+停止锐速：/serverspeeder/bin/serverSpeeder.sh stop
 
-重启锐速
-<pre>
-/serverspeeder/bin/serverSpeeder.sh restart
-</pre>
+锐速状态：service serverSpeeder status
 
-参数
-<pre>
-/serverspeeder/etc/config
+重启锐速：/serverspeeder/bin/serverSpeeder.sh restart
+
+锐速配置：/serverspeeder/etc/config
 </pre>
 
 SSR  
