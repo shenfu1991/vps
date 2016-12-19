@@ -122,3 +122,8 @@ vmuser7647
 RNsV1wnJwH
 https://panel.cloudatcost.com/login.php
 a7e2YzAByp
+
+alpharacks 18美元kvm 512M 
+<pre>
+https://www.alpharacks.com/myrack/aff.php?aff=155&pid=149
+</pre>
