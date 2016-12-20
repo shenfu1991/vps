@@ -51,6 +51,8 @@ crontab -e
 重启锐速：/serverspeeder/bin/serverSpeeder.sh restart
 
 锐速配置：/serverspeeder/etc/config
+
+卸载锐速：/serverspeeder/bin/serverSpeeder.sh uninstall
 </pre>
 
 SSR  
