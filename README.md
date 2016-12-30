@@ -118,7 +118,7 @@ wget -qO- bench.sh | bash
 
 
 
-2dpvIYNyL9F98nKr00
+kMT6nPXEf4x7b12Gg5
 https://vpscp.alpharacks.com:5656/login.php
 vmuser7647
 RNsV1wnJwH
