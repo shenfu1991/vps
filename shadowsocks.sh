@@ -378,7 +378,24 @@ install(){
         echo "Shadowsocks-go install failed!"
         exit 1
     fi
-
+                firewall-cmd --permanent --zone=public --add-port=9999/tcp
+                firewall-cmd --permanent --zone=public --add-port=9999/udp
+                firewall-cmd --permanent --zone=public --add-port=8888/tcp
+                firewall-cmd --permanent --zone=public --add-port=8888/udp
+                firewall-cmd --permanent --zone=public --add-port=7777/tcp
+                firewall-cmd --permanent --zone=public --add-port=7777/udp
+                firewall-cmd --permanent --zone=public --add-port=6666/tcp
+                firewall-cmd --permanent --zone=public --add-port=6666/udp
+                firewall-cmd --permanent --zone=public --add-port=5555/tcp
+                firewall-cmd --permanent --zone=public --add-port=5555/udp
+                firewall-cmd --permanent --zone=public --add-port=4444/tcp
+                firewall-cmd --permanent --zone=public --add-port=4444/udp
+                firewall-cmd --permanent --zone=public --add-port=3333/tcp
+                firewall-cmd --permanent --zone=public --add-port=3333/udp
+                firewall-cmd --permanent --zone=public --add-port=2222/tcp
+                firewall-cmd --permanent --zone=public --add-port=2222/udp
+                firewall-cmd --permanent --zone=public --add-port=1111/tcp
+                firewall-cmd --permanent --zone=public --add-port=1111/udp
     clear
     echo
     echo "Congratulations, Shadowsocks-go install completed!"
