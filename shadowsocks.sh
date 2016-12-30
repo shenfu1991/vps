@@ -268,24 +268,6 @@ firewall_set(){
             if [ $? -ne 0 ]; then
                 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport ${shadowsocksport} -j ACCEPT
                 iptables -I INPUT -m state --state NEW -m udp -p udp --dport ${shadowsocksport} -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 9999 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 9999 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 7777 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 7777 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6666 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6666 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5555 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5555 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4444 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4444 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3333 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3333 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2222 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2222 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1111 -j ACCEPT
-                iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1111 -j ACCEPT
                 /etc/init.d/iptables save
                 /etc/init.d/iptables restart
             else
@@ -299,25 +281,6 @@ firewall_set(){
         if [ $? -eq 0 ]; then
             firewall-cmd --permanent --zone=public --add-port=${shadowsocksport}/tcp
             firewall-cmd --permanent --zone=public --add-port=${shadowsocksport}/udp
-            firewall-cmd --permanent --zone=public --add-port=9999/tcp
-            firewall-cmd --permanent --zone=public --add-port=9999/udp
-            firewall-cmd --permanent --zone=public --add-port=8888/tcp
-            firewall-cmd --permanent --zone=public --add-port=8888/udp
-            firewall-cmd --permanent --zone=public --add-port=7777/tcp
-            firewall-cmd --permanent --zone=public --add-port=7777/udp
-            firewall-cmd --permanent --zone=public --add-port=6666/tcp
-            firewall-cmd --permanent --zone=public --add-port=6666/udp
-            firewall-cmd --permanent --zone=public --add-port=5555/tcp
-            firewall-cmd --permanent --zone=public --add-port=5555/udp
-            firewall-cmd --permanent --zone=public --add-port=4444/tcp
-            firewall-cmd --permanent --zone=public --add-port=4444/udp
-            firewall-cmd --permanent --zone=public --add-port=3333/tcp
-            firewall-cmd --permanent --zone=public --add-port=3333/udp
-            firewall-cmd --permanent --zone=public --add-port=2222/tcp
-            firewall-cmd --permanent --zone=public --add-port=2222/udp
-            firewall-cmd --permanent --zone=public --add-port=1111/tcp
-            firewall-cmd --permanent --zone=public --add-port=1111/udp
-
             firewall-cmd --reload
         else
             echo "Firewalld looks like not running, try to start..."
@@ -325,24 +288,6 @@ firewall_set(){
             if [ $? -eq 0 ]; then
                 firewall-cmd --permanent --zone=public --add-port=${shadowsocksport}/tcp
                 firewall-cmd --permanent --zone=public --add-port=${shadowsocksport}/udp
-                firewall-cmd --permanent --zone=public --add-port=9999/tcp
-                firewall-cmd --permanent --zone=public --add-port=9999/udp
-                firewall-cmd --permanent --zone=public --add-port=8888/tcp
-                firewall-cmd --permanent --zone=public --add-port=8888/udp
-                firewall-cmd --permanent --zone=public --add-port=7777/tcp
-                firewall-cmd --permanent --zone=public --add-port=7777/udp
-                firewall-cmd --permanent --zone=public --add-port=6666/tcp
-                firewall-cmd --permanent --zone=public --add-port=6666/udp
-                firewall-cmd --permanent --zone=public --add-port=5555/tcp
-                firewall-cmd --permanent --zone=public --add-port=5555/udp
-                firewall-cmd --permanent --zone=public --add-port=4444/tcp
-                firewall-cmd --permanent --zone=public --add-port=4444/udp
-                firewall-cmd --permanent --zone=public --add-port=3333/tcp
-                firewall-cmd --permanent --zone=public --add-port=3333/udp
-                firewall-cmd --permanent --zone=public --add-port=2222/tcp
-                firewall-cmd --permanent --zone=public --add-port=2222/udp
-                firewall-cmd --permanent --zone=public --add-port=1111/tcp
-                firewall-cmd --permanent --zone=public --add-port=1111/udp
                 firewall-cmd --reload
             else
                 echo "WARNING: Try to start firewalld failed. please enable port ${shadowsocksport} manually if necessary."
@@ -378,24 +323,9 @@ install(){
         echo "Shadowsocks-go install failed!"
         exit 1
     fi
-                firewall-cmd --permanent --zone=public --add-port=9999/tcp
-                firewall-cmd --permanent --zone=public --add-port=9999/udp
-                firewall-cmd --permanent --zone=public --add-port=8888/tcp
-                firewall-cmd --permanent --zone=public --add-port=8888/udp
-                firewall-cmd --permanent --zone=public --add-port=7777/tcp
-                firewall-cmd --permanent --zone=public --add-port=7777/udp
-                firewall-cmd --permanent --zone=public --add-port=6666/tcp
-                firewall-cmd --permanent --zone=public --add-port=6666/udp
-                firewall-cmd --permanent --zone=public --add-port=5555/tcp
-                firewall-cmd --permanent --zone=public --add-port=5555/udp
-                firewall-cmd --permanent --zone=public --add-port=4444/tcp
-                firewall-cmd --permanent --zone=public --add-port=4444/udp
-                firewall-cmd --permanent --zone=public --add-port=3333/tcp
-                firewall-cmd --permanent --zone=public --add-port=3333/udp
-                firewall-cmd --permanent --zone=public --add-port=2222/tcp
-                firewall-cmd --permanent --zone=public --add-port=2222/udp
-                firewall-cmd --permanent --zone=public --add-port=1111/tcp
-                firewall-cmd --permanent --zone=public --add-port=1111/udp
+      
+       wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vps/master/firewall.sh && bash firewall.sh
+       
     clear
     echo
     echo "Congratulations, Shadowsocks-go install completed!"
@@ -408,6 +338,8 @@ install(){
     echo "Welcome to visit:https://teddysun.com/392.html"
     echo "Enjoy it!"
     echo
+      exit 0
+
 }
 
 # Uninstall Shadowsocks-go
