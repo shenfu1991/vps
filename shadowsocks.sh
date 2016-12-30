@@ -86,7 +86,7 @@ getversion(){
 }
 
 # Get update firewall
-function update_firewall(){
+update_firewall(){
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 9999 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 9999 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
@@ -348,9 +348,7 @@ install(){
         echo "Shadowsocks-go install failed!"
         exit 1
     fi
-      
-       wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vps/master/firewall.sh && bash firewall.sh
-       
+    
     clear
     echo
     echo "Congratulations, Shadowsocks-go install completed!"
@@ -363,8 +361,6 @@ install(){
     echo "Welcome to visit:https://teddysun.com/392.html"
     echo "Enjoy it!"
     echo
-      exit 0
-
 }
 
 # Uninstall Shadowsocks-go
