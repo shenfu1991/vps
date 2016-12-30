@@ -85,6 +85,30 @@ getversion(){
     fi
 }
 
+# Get update firewall
+function update_firewall(){
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 9999 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 9999 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 7777 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 7777 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6666 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6666 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5555 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5555 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3333 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3333 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2222 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2222 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1111 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1111 -j ACCEPT
+
+echo "firewall set complete! meng meng"
+}             
+
 # CentOS version
 centosversion(){
     if check_sys sysRelease centos; then
@@ -295,6 +319,7 @@ firewall_set(){
         fi
     fi
     echo "firewall set completed..."
+    update_firewall
 }
 
 # Install Shadowsocks-go
