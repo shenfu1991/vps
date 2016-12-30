@@ -71,6 +71,22 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vp
 安装路径：/usr/local/shadowsocks/shadowsoks  
 </pre>
 
+shadowsocks-go
+<pre>
+wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vps/master/shadowsocks.sh
+chmod +x shadowsocks.sh
+./shadowsocks.sh 2>&1 | tee shadowsocks.log
+</pre>
+
+使用命令：
+<pre>
+启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status
+配置文件路径：/etc/shadowsocks/config.json
+</pre>
+
 
 查看占用  
 <pre>
