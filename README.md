@@ -43,15 +43,10 @@ crontab -e
 
 <pre> 
 启动锐速：/serverspeeder/bin/serverSpeeder.sh start
-
 停止锐速：/serverspeeder/bin/serverSpeeder.sh stop
-
 锐速状态：service serverSpeeder status
-
 重启锐速：/serverspeeder/bin/serverSpeeder.sh restart
-
 锐速配置：/serverspeeder/etc/config
-
 卸载锐速：/serverspeeder/bin/serverSpeeder.sh uninstall
 </pre>
 
@@ -71,7 +66,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vp
 安装路径：/usr/local/shadowsocks/shadowsoks  
 </pre>
 
-shadowsocks-go
+原版shadowsocks
 <pre>
 wget -N --no-check-certificate https://raw.githubusercontent.com/mengzhihoing/vps/master/shadowsocks.sh
 chmod +x shadowsocks.sh
@@ -84,7 +79,7 @@ chmod +x shadowsocks.sh
 停止：/etc/init.d/shadowsocks stop
 重启：/etc/init.d/shadowsocks restart
 状态：/etc/init.d/shadowsocks status
-配置文件路径：/etc/shadowsocks/config.json
+配置文件路径：/etc/shadowsocks.json
 </pre>
 
 
@@ -116,13 +111,10 @@ windows:  https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-win
 client_windows_amd64.exe -l "127.0.0.1:8388" -r "ngrokd.ml:554" -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2  -key shenfu1991 -crypt aes-128   
 </pre>
 
-
 vps测试
 <pre>
 wget -qO- bench.sh | bash  
 </pre>
-
-
 
 老毛子固件kcptun设置：  
 
@@ -134,7 +126,7 @@ wget -qO- bench.sh | bash
 
 
 
-kMT6nPXEf4x7b12Gg5
+8sLEvak2z0CG152IWq
 https://vpscp.alpharacks.com:5656/login.php
 vmuser7647
 RNsV1wnJwH
