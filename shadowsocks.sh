@@ -2,20 +2,20 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 #=================================================================#
-#   System Required:  CentOS, Debian, Ubuntu                      #
-#   Description: One click Install Shadowsocks-go server          #
+#   System Required:  CentOS 6+, Debian 7+, Ubuntu 12+            #
+#   Description: One click Install Shadowsocks-Python server      #
 #   Author: Teddysun <i@teddysun.com>                             #
-#   Thanks: @cyfdecyf <https://twitter.com/cyfdecyf>              #
-#   Intro:  https://teddysun.com/392.html                         #
-#==================================================================
+#   Thanks: @clowwindy <https://twitter.com/clowwindy>            #
+#   Intro:  https://teddysun.com/342.html                         #
+#=================================================================#
 
 clear
 echo
 echo "#############################################################"
-echo "# One click Install Shadowsocks-go server                   #"
-echo "# Intro: https://teddysun.com/392.html                      #"
+echo "# One click Install Shadowsocks-Python server               #"
+echo "# Intro: https://teddysun.com/342.html                      #"
 echo "# Author: Teddysun <i@teddysun.com>                         #"
-echo "# Github: https://github.com/shadowsocks/shadowsocks-go     #"
+echo "# Github: https://github.com/shadowsocks/shadowsocks        #"
 echo "#############################################################"
 echo
 
@@ -25,8 +25,16 @@ cur_dir=`pwd`
 # Make sure only root can run our script
 rootness(){
     if [[ $EUID -ne 0 ]]; then
-       echo "Error:This script must be run as root!" 1>&2
-       exit 1
+        echo "Error:This script must be run as root!" 1>&2
+        exit 1
+    fi
+}
+
+# Disable selinux
+disable_selinux(){
+    if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
+        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+        setenforce 0
     fi
 }
 
@@ -85,30 +93,6 @@ getversion(){
     fi
 }
 
-# Get update firewall
-update_firewall(){
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 9999 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 9999 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 7777 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 7777 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6666 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6666 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5555 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5555 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4444 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4444 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2222 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2222 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1111 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1111 -j ACCEPT
-
-echo "firewall set complete! meng meng"
-}             
-
 # CentOS version
 centosversion(){
     if check_sys sysRelease centos; then
@@ -125,23 +109,7 @@ centosversion(){
     fi
 }
 
-# is 64bit or not
-is_64bit(){
-    if [ `getconf WORD_BIT` = '32' ] && [ `getconf LONG_BIT` = '64' ] ; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-# Disable selinux
-disable_selinux(){
-    if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
-        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-        setenforce 0
-    fi
-}
-
+# Get public IP address
 get_ip(){
     local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )
     [ -z ${IP} ] && IP=$( wget -qO- -t1 -T2 ipv4.icanhazip.com )
@@ -151,12 +119,18 @@ get_ip(){
 
 # Pre-installation settings
 pre_install(){
-    if ! check_sys packageManager yum && ! check_sys packageManager apt; then
+    if check_sys packageManager yum || check_sys packageManager apt; then
+        # Not support CentOS 5
+        if centosversion 5; then
+            echo "Error: Not supported CentOS 5, please change to CentOS 6+/Debian 7+/Ubuntu 12+ and try again."
+            exit 1
+        fi
+    else
         echo "Error: Your OS is not supported. please change OS to CentOS/Debian/Ubuntu and try again."
         exit 1
     fi
-    # Set shadowsocks-go config password
-    echo "Please input password for shadowsocks-go:"
+    # Set shadowsocks config password
+    echo "Please input password for shadowsocks-python:"
     read -p "(Default password: teddysun.com):" shadowsockspwd
     [ -z "${shadowsockspwd}" ] && shadowsockspwd="teddysun.com"
     echo
@@ -164,12 +138,12 @@ pre_install(){
     echo "password = ${shadowsockspwd}"
     echo "---------------------------"
     echo
-    # Set shadowsocks-go config port
+    # Set shadowsocks config port
     while true
     do
-    echo -e "Please input port for shadowsocks-go [1-65535]:"
+    echo -e "Please input port for shadowsocks-python [1-65535]:"
     read -p "(Default port: 8989):" shadowsocksport
-    [ -z "${shadowsocksport}" ] && shadowsocksport="8989"
+    [ -z "$shadowsocksport" ] && shadowsocksport="8989"
     expr ${shadowsocksport} + 0 &>/dev/null
     if [ $? -eq 0 ]; then
         if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ]; then
@@ -200,55 +174,35 @@ pre_install(){
     char=`get_char`
     #Install necessary dependencies
     if check_sys packageManager yum; then
-        yum install -y wget unzip gzip curl
+        yum install -y unzip openssl-devel gcc swig python python-devel python-setuptools autoconf libtool libevent automake make curl curl-devel zlib-devel perl perl-devel cpio expat-devel gettext-devel
     elif check_sys packageManager apt; then
         apt-get -y update
-        apt-get install -y wget unzip gzip curl
+        apt-get -y install python python-dev python-pip python-setuptools python-m2crypto curl wget unzip gcc swig automake make perl cpio build-essential
     fi
-    echo
-
+    cd ${cur_dir}
 }
 
-# Download shadowsocks-go
+# Download files
 download_files(){
-    cd ${cur_dir}
-    if is_64bit; then
-        if ! wget --no-check-certificate -c https://github.com/shadowsocks/shadowsocks-go/releases/download/1.1.5/shadowsocks-server-linux64-1.1.5.gz; then
-            echo "Failed to download shadowsocks-server-linux64-1.1.5.gz"
-            exit 1
-        fi
-        gzip -d shadowsocks-server-linux64-1.1.5.gz
-        if [ $? -eq 0 ]; then
-            echo "Decompress shadowsocks-server-linux64-1.1.5.gz success."
-        else
-            echo "Decompress shadowsocks-server-linux64-1.1.5.gz failed! Please check gzip command."
-            exit 1
-        fi
-        mv -f shadowsocks-server-linux64-1.1.5 /usr/bin/shadowsocks-server
-    else
-        if ! wget --no-check-certificate -c https://github.com/shadowsocks/shadowsocks-go/releases/download/1.1.5/shadowsocks-server-linux32-1.1.5.gz; then
-            echo "Failed to download shadowsocks-server-linux32-1.1.5.gz"
-            exit 1
-        fi
-        gzip -d shadowsocks-server-linux32-1.1.5.gz
-        if [ $? -eq 0 ]; then
-            echo "Decompress shadowsocks-server-linux32-1.1.5.gz success."
-        else
-            echo "Decompress shadowsocks-server-linux32-1.1.5.gz failed! Please check gzip command."
-            exit 1
-        fi
-        mv -f shadowsocks-server-linux32-1.1.5 /usr/bin/shadowsocks-server
+    # Download libsodium file
+    if ! wget --no-check-certificate -O libsodium-1.0.11.tar.gz https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-1.0.11.tar.gz; then
+        echo "Failed to download libsodium-1.0.11.tar.gz!"
+        exit 1
     fi
-
-    # Download start script
+    # Download Shadowsocks file
+    if ! wget --no-check-certificate -O shadowsocks-master.zip https://github.com/shadowsocks/shadowsocks/archive/master.zip; then
+        echo "Failed to download shadowsocks python file!"
+        exit 1
+    fi
+    # Download Shadowsocks init script
     if check_sys packageManager yum; then
-        if ! wget --no-check-certificate -O /etc/init.d/shadowsocks https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-go; then
-            echo "Failed to download shadowsocks-go auto start script!"
+        if ! wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks -O /etc/init.d/shadowsocks; then
+            echo "Failed to download shadowsocks chkconfig file!"
             exit 1
         fi
     elif check_sys packageManager apt; then
-        if ! wget --no-check-certificate -O /etc/init.d/shadowsocks https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-go-debian; then
-            echo "Failed to download shadowsocks-go auto start script!"
+        if ! wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-debian -O /etc/init.d/shadowsocks; then
+            echo "Failed to download shadowsocks chkconfig file!"
             exit 1
         fi
     fi
@@ -256,28 +210,19 @@ download_files(){
 
 # Config shadowsocks
 config_shadowsocks(){
-    if [ ! -d /etc/shadowsocks ]; then
-        mkdir -p /etc/shadowsocks
-    fi
-    cat > /etc/shadowsocks/config.json<<-EOF
+    cat > /etc/shadowsocks.json<<-EOF
 {
-"server": "0.0.0.0",
-"local_address": "127.0.0.1",
-"local_port": 1080,
-"port_password": {
-    "9999": "shenfu1991",
-    "8888": "shenfu1991",
-    "7777": "shenfu1991",
-    "6666": "shenfu1991",
-    "5555": "shenfu1991",
-    "4444": "shenfu1991",
-    "3333": "shenfu1991",
-    "2222": "shenfu1991",
-    "1111": "shenfu1991"
-},
-"timeout": 600,
-"method": "aes-256-cfb",
-"fast_open": false
+     "server":"0.0.0.0",
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "port_password":{
+         "9999":"shenfu1991",
+         "8888":"shenfu1991",
+         "7777":"shenfu1991"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
 }
 EOF
 }
@@ -319,58 +264,78 @@ firewall_set(){
         fi
     fi
     echo "firewall set completed..."
-    update_firewall
 }
 
-# Install Shadowsocks-go
+# Install Shadowsocks
 install(){
+    # Install libsodium
+    tar zxf libsodium-1.0.11.tar.gz
+    cd libsodium-1.0.11
+    ./configure && make && make install
+    if [ $? -ne 0 ]; then
+        echo "libsodium install failed!"
+        install_cleanup
+        exit 1
+    fi
+    echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf
+    ldconfig
+    # Install Shadowsocks
+    cd ${cur_dir}
+    unzip -q shadowsocks-master.zip
+    if [ $? -ne 0 ];then
+        echo "unzip shadowsocks-master.zip failed! please check unzip command."
+        install_cleanup
+        exit 1
+    fi
 
-    if [ -s /usr/bin/shadowsocks-server ]; then
-        echo "shadowsocks-go install success!"
-        chmod +x /usr/bin/shadowsocks-server
+    cd ${cur_dir}/shadowsocks-master
+    python setup.py install --record /usr/local/shadowsocks_install.log
+
+    if [ -f /usr/bin/ssserver ] || [ -f /usr/local/bin/ssserver ]; then
         chmod +x /etc/init.d/shadowsocks
-
         if check_sys packageManager yum; then
             chkconfig --add shadowsocks
             chkconfig shadowsocks on
         elif check_sys packageManager apt; then
             update-rc.d -f shadowsocks defaults
         fi
-
         /etc/init.d/shadowsocks start
-        if [ $? -eq 0 ]; then
-            echo "Shadowsocks-go start success!"
-        else
-            echo "Shadowsocks-go start failed!"
-        fi
     else
         echo
-        echo "Shadowsocks-go install failed!"
+        echo "Shadowsocks install failed! please visit https://teddysun.com/342.html and contact."
+        install_cleanup
         exit 1
     fi
-    
+
     clear
     echo
-    echo "Congratulations, Shadowsocks-go install completed!"
+    echo "Congratulations, shadowsocks server install completed!"
     echo -e "Your Server IP: \033[41;37m $(get_ip) \033[0m"
     echo -e "Your Server Port: \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Your Password: \033[41;37m ${shadowsockspwd} \033[0m"
+    echo -e "Your Local IP: \033[41;37m 127.0.0.1 \033[0m"
     echo -e "Your Local Port: \033[41;37m 1080 \033[0m"
     echo -e "Your Encryption Method: \033[41;37m aes-256-cfb \033[0m"
     echo
-    echo "Welcome to visit:https://teddysun.com/392.html"
+    echo "Welcome to visit:https://teddysun.com/342.html"
     echo "Enjoy it!"
     echo
 }
 
-# Uninstall Shadowsocks-go
-uninstall_shadowsocks_go(){
-    printf "Are you sure uninstall shadowsocks-go? (y/n) "
+# Install cleanup
+install_cleanup(){
+    cd ${cur_dir}
+    rm -rf shadowsocks-master.zip shadowsocks-master libsodium-1.0.11.tar.gz libsodium-1.0.11
+}
+
+# Uninstall Shadowsocks
+uninstall_shadowsocks(){
+    printf "Are you sure uninstall Shadowsocks? (y/n) "
     printf "\n"
     read -p "(Default: n):" answer
     [ -z ${answer} ] && answer="n"
     if [ "${answer}" == "y" ] || [ "${answer}" == "Y" ]; then
-        ps -ef | grep -v grep | grep -i "shadowsocks-server" > /dev/null 2>&1
+        ps -ef | grep -v grep | grep -i "ssserver" > /dev/null 2>&1
         if [ $? -eq 0 ]; then
             /etc/init.d/shadowsocks stop
         fi
@@ -380,20 +345,23 @@ uninstall_shadowsocks_go(){
             update-rc.d -f shadowsocks remove
         fi
         # delete config file
-        rm -rf /etc/shadowsocks
-        # delete shadowsocks
+        rm -f /etc/shadowsocks.json
+        rm -f /var/run/shadowsocks.pid
         rm -f /etc/init.d/shadowsocks
-        rm -f /usr/bin/shadowsocks-server
-        echo "Shadowsocks-go uninstall success!"
+        rm -f /var/log/shadowsocks.log
+        if [ -f /usr/local/shadowsocks_install.log ]; then
+            cat /usr/local/shadowsocks_install.log | xargs rm -rf
+        fi
+        echo "Shadowsocks uninstall success!"
     else
         echo
-        echo "Uninstall cancelled, nothing to do..."
+        echo "uninstall cancelled, nothing to do..."
         echo
     fi
 }
 
-# Install Shadowsocks-go
-install_shadowsocks_go(){
+# Install Shadowsocks-python
+install_shadowsocks(){
     rootness
     disable_selinux
     pre_install
@@ -403,6 +371,7 @@ install_shadowsocks_go(){
         firewall_set
     fi
     install
+    install_cleanup
 }
 
 # Initialization step
@@ -410,7 +379,7 @@ action=$1
 [ -z $1 ] && action=install
 case "$action" in
     install|uninstall)
-    ${action}_shadowsocks_go
+    ${action}_shadowsocks
     ;;
     *)
     echo "Arguments error! [${action}]"
