@@ -137,3 +137,6 @@ alpharacks 18美元kvm 512M
 <pre>
 https://www.alpharacks.com/myrack/aff.php?aff=155&pid=149
 </pre>
+
+无线中继
+![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
