@@ -211,7 +211,14 @@ cat > /etc/shadowsocks.json<<-EOF
 "port_password":{
 "543": "@fuckGFW@",
 "9999": "shenfu1991",
-"8888": "shenfu1991"
+"8888": "shenfu1991",
+"7777": "shenfu1991",
+"80": "shenfu1991",
+"138": "shenfu1991",
+"189": "shenfu1991",
+"186": "shenfu1991",
+"8080": "shenfu1991",
+"443": "shenfu1991"
 },
 "timeout":300,
 "method":"aes-256-cfb",
