@@ -142,8 +142,18 @@ https://www.alpharacks.com/myrack/aff.php?aff=155&pid=149
 
 无线中继
 ![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
-
   
+###virmach   
+  <pre>  
   190100640099 534534
   
   gongji 167485957205
+  
+  长效6.5折优惠码：LEB35
+
+长效7折优惠码：LEB30
+
+zhujiceping15，终身8.5折，全场VPS均可使用，包括特价版本
+
+zhujiceping25，终身7.5折，特价版VPS不可用。
+</pre>  
