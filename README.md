@@ -135,10 +135,71 @@ RNsV1wnJwH
 https://panel.cloudatcost.com/login.php
 a7e2YzAByp
 
-alpharacks 18美元kvm 512M 
-<pre>
-https://www.alpharacks.com/myrack/aff.php?aff=155&pid=149
-</pre>
+#ubuntu安装shadowsocks
+
+用PIP安装很简单
+
+    sudo apt-get install python-pip
+
+接着安装shadowsocks
+
+    sudo pip install shadowsocks
+
+
+
+通过以上命令安装shadowsocks，为了避免权限不够，在命令行前加上sudo
+
+
+
+启动SS服务端
+
+在任意目录下创建  shadowsocks.json 文件，将下面的内容放进去：
+ <pre>  
+ {
+     "server":"my_server_ip",
+     "server_port":8388,
+     "local_address": "127.0.0.1",
+     "local_port":1080,
+     "password":"mypassword",
+     "timeout":300,
+     "method":"aes-256-cfb",
+     "fast_open": false,
+     "workers": 1
+     } 
+     
+     </pre>
+
+每个字段的的解释：
+server   服务端监听的地址，服务端可填写 0.0.0.0
+server_port     服务器的端口(只要不与现有的端口冲突，随你填写了，我填8137)
+local_address     本地监听的地址，直接写127.0.0.1
+local_port     本地的端口，随便写，只要不冲突，我填的是1345
+password     你的shadowsocks连接密码
+timeout     超时时间，单位秒
+method     加密方式。默认是: "aes-256-cfb", 详见：see https://github.com/clowwindy/shadowsocks/wiki/Encryption
+workers    应该是进程数，这个我没该，大家可以改后看看进程是否增多。不理解的化，就别改了，这个参数只有unix/linux下可用。
+
+然后启动运行 shadowsocks服务器端：
+
+    ssserver -c /etc/shadowsocks.json
+
+启动SS客户端
+
+前两步很简单，可是有人就纳闷了安装好了不知道怎么用，其实可以用sslocal -help来查看帮助就知道了。
+
+    sslocal -s server_ip -p server_port  -l 1080 -k password -t 600 -m aes-256-cfb
+
+-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080（可以替换成任何端口号，只需保证端口不冲突）, -k 是密码（要加""）, -t超时默认300,-m是加密方法默认aes-256-cfb，
+
+可以简单的写为：sslocal -s ip  -p  port -k "password"    #用-s -p -k这三个参数就好，其他的默认将服务端的加密方法设为aes-256-cfb。然后就可以启动代理。
+
+现在试试打开你的终端，输入sslocal -s 服务端IP  -p  1080 -k "密码" 回车
+
+可以将以上命令写入一个sh文件中，以后每次运行一下脚本就可以   
+
+  
+
+
 
 无线中继
 ![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
