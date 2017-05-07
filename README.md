@@ -218,3 +218,42 @@ zhujiceping15，终身8.5折，全场VPS均可使用，包括特价版本
 
 zhujiceping25，终身7.5折，特价版VPS不可用。
 </pre>  
+
+
+###LEDE 安装shadowsock ChinaDNS
+
+首次安装的话，先确保路由器联网，并更新软件包列表：
+
+注：部分ISP访问LEDE / OpenWrt官方站点可能会非常缓慢甚至下载失败，此时需要自行在PC上下载上面的依赖包以后自行上传至路由器目录手动安装。
+
+    opkg update
+    
+首先，需要手动安装部分依赖包（并不是所有的依赖包，部分依赖包会自动从软件仓库安装） 
+  <pre>  opkg install ip-full ipset iptables-mod-tproxy libev libpthread libpcre libmbedtls </pre>
+接下来下载软件，注意需要根据自己的CPU型号来进行选择。
+
+下载地址： http://openwrt-dist.sourceforge.net/packages/LEDE/
+
+需要下载的文件：
+
+
+    libudns_x.xx-x_xxxx.ipk
+    libsodium_x.x.xx-x_xxxx.ipk
+    shadowsocks-libev_x.x.x-x_xxxx.ipk
+    dns-forwarder_x.x.x-x_xxxx.ipk
+    ChinaDNS_x.x.x-x_xxxx.ipk
+    luci-app-shadowsocks_x.x.x-x_all.ipk
+    luci-app-chinadns_x.x.x-x_all.ipk
+    luci-app-dns-forwarder_x.x.x-x_all.ipk
+
+
+安装shadowsocks, ChinaDNS以及dns-forwarder：
+
+<pre>
+   cd /tmp
+   opkg install libudns*.ipk libsodium*.ipk
+   opkg install shadowsocks-libev*.ipk luci-app-shadowsocks*.ipk
+   opkg install ChinaDNS*.ipk luci-app-chinadns*.ipk
+   opkg install dns-forwarder*.ipk luci-app-dns-forwarder*.ipk
+
+</pre>
