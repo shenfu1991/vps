@@ -259,3 +259,7 @@ https://cokebar.info/archives/664
    opkg install dns-forwarder*.ipk luci-app-dns-forwarder*.ipk
 
 </pre>
+  
+kcptun openwrt 客户端执行文件：https://github.com/bettermanbao/openwrt-kcptun/releases  
+kcptun luci界面 https://github.com/kuoruan/luci-app-kcptun/
+
