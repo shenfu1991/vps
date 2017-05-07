@@ -222,6 +222,8 @@ zhujiceping25，终身7.5折，特价版VPS不可用。
 
 ###LEDE 安装shadowsock ChinaDNS
 
+https://cokebar.info/archives/664
+
 首次安装的话，先确保路由器联网，并更新软件包列表：
 
 注：部分ISP访问LEDE / OpenWrt官方站点可能会非常缓慢甚至下载失败，此时需要自行在PC上下载上面的依赖包以后自行上传至路由器目录手动安装。
