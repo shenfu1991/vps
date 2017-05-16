@@ -98,7 +98,6 @@ tar zxvf kcptun-linux-amd64-20161009.tar.gz
 服务器启动：   
 <pre>
 #./server_linux_amd64 -l ":554" -t "127.0.0.1:9999" -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast3  -key shenfu1991 -crypt aes-128 
-/root/server_linux_amd64 -l ":554" -t "127.0.0.1:9999" -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast3  -key shenfu1991 -crypt aes-128 
 </pre>
 
 客户端程序：  
@@ -109,8 +108,7 @@ windows:  https://github.com/xtaci/kcptun/releases/download/v20161009/kcptun-win
 
 客户端运行：  
 <pre>
-client_windows_amd64.exe -l "127.0.0.1:8388" -r "104.223.22.51:554" -mtu 1400 -sndwnd 512 -rcvwnd 512 -mode fast  -key shenfu1991 -crypt aes-128
-client_windows_amd64.exe -l "127.0.0.1:8388" -r "104.223.22.51:554" -mtu  1400 -sndwnd 512 -rcvwnd 512 -mode fast  -key shenfu1991 -crypt aes-128
+client_windows_amd64.exe -l "127.0.0.1:8388" -r "virmach.cf:554" -mtu  1400 -sndwnd 2048 -rcvwnd 2048 -mode fast3  -key shenfu1991 -crypt aes-128
 </pre>
 
 vps测试
