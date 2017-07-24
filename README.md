@@ -261,3 +261,26 @@ https://cokebar.info/archives/664
 kcptun openwrt 客户端执行文件：https://github.com/bettermanbao/openwrt-kcptun/releases  
 kcptun luci界面 https://github.com/kuoruan/luci-app-kcptun/
 
+shadowsocks ADED
+```
+wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+chmod +x shadowsocks-all.sh
+./shadowsocks-all.sh 2>&1 | tee shadowsocks-all.log
+```
+
+各版本默认配置文件
+Shadowsocks-Python 版：
+/etc/shadowsocks-python/config.json
+
+ShadowsocksR 版：
+/etc/shadowsocks-r/config.json
+
+Shadowsocks-Go 版：
+/etc/shadowsocks-go/config.json
+
+Shadowsocks-libev 版：
+/etc/shadowsocks-libev/config.json
+
+
+
+
