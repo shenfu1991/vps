@@ -281,6 +281,12 @@ Shadowsocks-Go 版：
 Shadowsocks-libev 版：
 /etc/shadowsocks-libev/config.json
 
-
-
+梅林ss
+```
+cd /tmp
+wget --no-check-certificate https://raw.githubusercontent.com/koolshare/koolshare.github.io/acelan_softcenter_ui/shadowsocks/shadowsocks.tar.gz
+tar -zxvf /tmp/shadowsocks.tar.gz
+chmod +x /tmp/shadowsocks/install.sh
+sh /tmp/shadowsocks/install.sh
+```
 
