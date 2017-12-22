@@ -313,4 +313,9 @@ sh /tmp/shadowsocks/install.sh
       例如：
       scp -r test      codinglog@192.168.0.101:/var/www/   把当前目录下的test目录上传到服务器
       的/var/www/ 目录
-
+      
+    
+CN2路线
+```
+http://www.vpscang.com/?vps_special_route=cn2
+```
