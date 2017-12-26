@@ -319,3 +319,21 @@ CN2路线
 ```
 http://www.vpscang.com/?vps_special_route=cn2
 ```
+
+wordpress安装插件提示需要ftp账号和密码解决
+原创 2017年09月28日 20:11:47 标签：wordpress /插件 /ftp /密码 /账户 133
+      在wordpress安装之后，想要安装一个插件来用，结果提示输入ftp账户与密码，而我本人根本不记得什么时候设置过ftp账户与密码。最后搜索了一下网上的解决方案，所需要更改wordpress文件夹的权限，代码如下：
+
+```
+sudo chown -R www  /home/wwwroot/hi
+```
+后面的文件路径是自己安装wordpress时的路径。
+可是按照这样操作之后，系统报错：
+```
+chown: changing ownership of `/home/wwwroot/hi/.user.ini': Operation not permitted
+```
+最后网上又找了一下解决方案，发现只需要如下更改之后就ok了：
+```
+sudo chown -R www  /home/wwwroot/hi/* 
+```
+只需要在文件路径之后再加一个/* ，具体原因对于我这种系统小白来讲也不清除，在此记录一下，希望能帮助到需要的人。
