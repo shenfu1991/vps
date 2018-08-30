@@ -35,15 +35,6 @@ lsof -i:80
 </pre>
 
 
-
-PiUd7zO5E274yL8miK
-https://vpscp.alpharacks.com:5656/login.php
-vmuser7647
-RNsV1wnJwH
-https://panel.cloudatcost.com/login.php
-a7e2YzAByp
-
-
 无线中继
 ![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
   
