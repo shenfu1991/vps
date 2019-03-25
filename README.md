@@ -152,3 +152,18 @@ chown: changing ownership of `/home/wwwroot/hi/.user.ini': Operation not permitt
 sudo chown -R www  /home/wwwroot/hi/* 
 ```
 只需要在文件路径之后再加一个/* ，具体原因对于我这种系统小白来讲也不清除，在此记录一下，希望能帮助到需要的人。
+
+
+1.zip命令
+```
+zip -r myfile.zip ./*
+```
+将当前目录下的所有文件和文件夹全部压缩成myfile.zip文件,－r表示递归压缩子目录下所有文件.
+
+2.unzip命令
+```
+unzip -o -d /home/sunny myfile.zip
+```
+把myfile.zip文件解压到 /home/sunny/
+-o:不提示的情况下覆盖文件；
+-d:-d /home/sunny 指明将文件解压缩到/home/sunny目录下；
