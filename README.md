@@ -177,3 +177,8 @@ unzip -o -d /home/sunny myfile.zip
 把myfile.zip文件解压到 /home/sunny/
 -o:不提示的情况下覆盖文件；
 -d:-d /home/sunny 指明将文件解压缩到/home/sunny目录下；
+
+安卓微信开发者
+```
+debugx5.qq.com
+```
