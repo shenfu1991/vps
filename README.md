@@ -75,7 +75,7 @@ Shadowsocks-Go 版：
 Shadowsocks-libev 版：
 /etc/init.d/shadowsocks-libev start | stop | restart | status
 
-各版本默认配置文件
+各版本默认配置文件 
 Shadowsocks-Python 版：
 /etc/shadowsocks-python/config.json
 
