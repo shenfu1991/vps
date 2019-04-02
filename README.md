@@ -182,3 +182,8 @@ unzip -o -d /home/sunny myfile.zip
 ```
 debugx5.qq.com
 ```
+
+强制https
+```
+rewrite ^(.*)$  https://$host$1 permanent;
+```
