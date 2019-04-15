@@ -203,3 +203,14 @@ export PATH=$PATH:/opt/au1200_rm/build_tools/bin
 ```
 export PATH=$PATH:/usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
 ```
+
+修改profile文件：
+```
+vi /etc/profile
+```
+
+加入 
+```
+export PATH=$PATH:/usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
+```
+
