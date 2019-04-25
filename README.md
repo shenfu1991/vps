@@ -214,3 +214,17 @@ vi /etc/profile
 export PATH=$PATH:/usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
 ```
 
+最近这FTP 频繁连不上，总是提示 响应:
+421 Too many connections (5) from this IP 
+```
+/usr/local/pureftpd/pure-ftpd.conf
+```
+or
+```
+/usr/local/pureftpd/bin/pure-ftpd.conf
+```
+
+修改MaxClientsPerIP 重启pureftpd
+
+
+
