@@ -227,30 +227,4 @@ or
 修改MaxClientsPerIP 重启pureftpd
 
 
-Cloud Torrent特点
-支持 BT下载
-支持 磁力链接下载
-支持 搜索磁力链接
-支持 离线下载
-支持 上传本地BT种子
-支持 边下边播( 格式限制：mp4/wbem/ogg)
-可视化界面 Web UI
 
-```
-wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/cloudt.sh && chmod +x cloudt.sh && bash cloudt.sh
-
-```
-
-
-Peerflix Server特点
-支持 BT下载
-支持 磁力链接下载
-支持 上传BT文件
-支持 离线下载
-支持 边下边播( 格式限制：mp4/wbem/ogg )
-可视化界面 Web UI
-
-```
-wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/pserver.sh && chmod +x pserver.sh && bash pserver.sh
-
-```
