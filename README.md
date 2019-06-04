@@ -227,5 +227,9 @@ iptables -L -n --line-numbers
 iptables -D INPUT 5（3306）
 ```
 
+以下命令行修改指定目录下的所有文件的权限为全体可读、可修改、可执行
+```
+chmod -R 777 apache-tomcat-8.5.20
 
+```
 
