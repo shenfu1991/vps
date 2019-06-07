@@ -233,3 +233,121 @@ chmod -R 777 apache-tomcat-8.5.20
 
 ```
 
+v2ray 透明代理
+
+```
+{
+  "log": {
+    "error": "/tmp/syslog.log",
+    "loglevel": "warning"
+  },
+  "inbound": {
+    "port": 1080,
+    "listen": "0.0.0.0",
+    "protocol": "socks",
+    "settings": {
+      "auth": "noauth",
+      "udp": true,
+      "ip": "127.0.0.1"
+    }
+  },
+  "outbound": {
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [
+        {
+          "address": "jiutianxuannv.net",
+          "port": 443,
+          "users": [
+            {
+              "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
+              "alterId": 64,
+              "security": "auto"
+            }
+          ]
+        }
+      ]
+    },
+    "mux": {
+      "enabled": true
+    },
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "tlsSettings": {
+        "serverName": "jiutianxuannv.net",
+        "allowInsecure": true
+      },
+      "wsSettings": {
+        "path": "/ray"
+      }
+    }
+  },
+  "inboundDetour": [
+    {
+      "port": "1099",
+      "listen": "0.0.0.0",
+      "protocol": "dokodemo-door",
+      "settings": {
+        "network": "tcp,udp",
+        "timeout": 30,
+        "followRedirect": true
+      }
+    }
+  ],
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  "dns": {
+    "servers": [
+      "119.29.29.29",
+      "223.5.5.5"
+    ]
+  },
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "rules": [
+        {
+          "type": "chinasites",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "ip": [
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "100.100.100.100/32",
+            "188.188.188.188/32",
+            "110.110.110.110/32",
+            "104.160.185.171/32",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "chinaip",
+          "outboundTag": "direct"
+        }
+      ]
+    }
+  }
+}
+```
+
