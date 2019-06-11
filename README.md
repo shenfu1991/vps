@@ -351,3 +351,10 @@ v2ray 透明代理
 }
 ```
 
+terminal via sock5
+
+```
+ssh -D 127.0.0.1:1081 -p 27242 root@shengshiteng.com
+
+```
+
