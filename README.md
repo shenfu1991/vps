@@ -358,3 +358,15 @@ ssh -D 127.0.0.1:1081 -p 27242 root@shengshiteng.com
 
 ```
 
+ws+tls
+```
+      location /ray { #/ray提供流量重定向功能，匹配转发翻墙流量，客户端中伪装$
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:10000;#翻墙流量转发给10000端口，v2ray配置>$
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+      }
+```
+
