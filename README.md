@@ -388,3 +388,9 @@ echo "test rc " > /var/test.log
 ```
 5、执行reboot重启系统，然后查看test.log
 
+mac终端 代理http
+```
+export ALL_PROXY=127.0.0.1:1087
+```
+
+
