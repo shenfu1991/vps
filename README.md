@@ -388,9 +388,3 @@ echo "test rc " > /var/test.log
 ```
 5、执行reboot重启系统，然后查看test.log
 
-
---------------------- 
-作者：zhengchaooo 
-来源：CSDN 
-原文：https://blog.csdn.net/zhengchaooo/article/details/80202599 
-版权声明：本文为博主原创文章，转载请附上博文链接！
