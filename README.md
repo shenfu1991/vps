@@ -370,3 +370,27 @@ ws+tls
       }
 ```
 
+
+1、Ubuntu18.04 开机启动
+
+2、创建/etc/rc.local文件
+```
+touch /etc/rc.local
+```
+3、赋可执行权限
+```
+chmod 755 /etc/rc.local
+```
+4、编辑rc.local，添加需要开机启动的任务
+```
+#!/bin/bash
+echo "test rc " > /var/test.log
+```
+5、执行reboot重启系统，然后查看test.log
+
+
+--------------------- 
+作者：zhengchaooo 
+来源：CSDN 
+原文：https://blog.csdn.net/zhengchaooo/article/details/80202599 
+版权声明：本文为博主原创文章，转载请附上博文链接！
