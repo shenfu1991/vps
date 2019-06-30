@@ -393,4 +393,8 @@ mac终端 代理http
 export ALL_PROXY=127.0.0.1:1087
 ```
 
+端口转发
+```
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/iptables-pf.sh && chmod +x iptables-pf.sh && bash iptables-pf.sh
 
+```
