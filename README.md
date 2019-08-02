@@ -241,50 +241,23 @@ v2ray 透明代理
     "error": "/tmp/syslog.log",
     "loglevel": "warning"
   },
-  "inbound": {
-    "port": 1080,
-    "listen": "0.0.0.0",
-    "protocol": "socks",
-    "settings": {
-      "auth": "noauth",
-      "udp": true,
-      "ip": "127.0.0.1"
-    }
-  },
-  "outbound": {
-    "protocol": "vmess",
-    "settings": {
-      "vnext": [
-        {
-          "address": "jiutianxuannv.net",
-          "port": 443,
-          "users": [
-            {
-              "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
-              "alterId": 64,
-              "security": "auto"
-            }
-          ]
-        }
-      ]
-    },
-    "mux": {
-      "enabled": true
-    },
-    "streamSettings": {
-      "network": "ws",
-      "security": "tls",
-      "tlsSettings": {
-        "serverName": "jiutianxuannv.net",
-        "allowInsecure": true
-      },
-      "wsSettings": {
-        "path": "/ray"
-      }
-    }
-  },
-  "inboundDetour": [
+  "inbounds":[
     {
+      "port": 1088,
+      "listen": "192.168.123.1",
+      "protocol": "http",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "ip": "192.168.123.1"
+      },
+      "streamSettings": {
+        "sockopt": {
+          "mark": 255
+        }
+      }
+    },{
+    //inboundDetour
       "port": "1099",
       "listen": "0.0.0.0",
       "protocol": "dokodemo-door",
@@ -295,17 +268,83 @@ v2ray 透明代理
       }
     }
   ],
-  "outboundDetour": [
-    {
-      "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+  "outbounds":[
+  {
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [
+        {
+          "address": "107.172.104.202",
+          "port": 31364,
+          "users": [
+            {
+              "id": "48fa8a1d-bb83-4b63-9e05-e2ca9f964411",
+              "alterId": 32
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "sockopt": {
+        "mark": 255
+      },
+      "network": "tcp",
+      "tcpSettings": {
+        "connectionReuse": true,
+        "header": {
+          "type": "http",
+          "request": {
+            "version": "1.1",
+            "method": "GET",
+            "path": ["/"],
+            "headers": {
+              "Host": ["www.163.com", "www.sogou.com"],
+              "User-Agent": [
+                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+                        "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/69.0.3497.91 Mobile/15E148 Safari/605.1"
+              ],
+              "Accept-Encoding": ["gzip, deflate"],
+              "Connection": ["keep-alive"],
+              "Pragma": "no-cache"
+            }
+          },
+          "response": {
+            "version": "1.1",
+            "status": "200",
+            "reason": "OK",
+            "headers": {
+              "Content-Type": ["application/octet-stream", "application/x-msdownload", "text/html", "application/x-shockwave-flash"],
+              "Transfer-Encoding": ["chunked"],
+              "Connection": ["keep-alive"],
+              "Pragma": "no-cache"
+            }
+          }
+        }
+      }
     }
+  },{
+  //outboundDetour
+    "protocol": "freedom",
+    "settings": {},
+    "tag": "direct",
+    "streamSettings": {
+      "sockopt": {
+        "mark": 255
+      }
+    }
+  },{
+  //outboundDetour
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+ }
   ],
   "dns": {
     "servers": [
-      "119.29.29.29",
-      "223.5.5.5"
+      "8.8.8.8",
+      "8.8.4.4",
+      "localhost"
     ]
   },
   "routing": {
@@ -313,42 +352,39 @@ v2ray 透明代理
     "settings": {
       "rules": [
         {
-          "type": "chinasites",
+          "type": "field",
+          "ip": [
+            "127.0.0.0/8",
+            "::1/128"
+          ],
+          "outboundTag": "blocked"
+        },
+        {
+          "type": "field",
+          "domain": [
+            "baidu.com",
+            "qq.com",
+            "geosite:cn"
+          ],
           "outboundTag": "direct"
         },
         {
           "type": "field",
           "ip": [
-            "0.0.0.0/8",
-            "10.0.0.0/8",
-            "100.64.0.0/10",
-            "127.0.0.0/8",
-            "169.254.0.0/16",
-            "172.16.0.0/12",
-            "192.0.0.0/24",
-            "192.0.2.0/24",
-            "192.168.0.0/16",
-            "198.18.0.0/15",
-            "198.51.100.0/24",
-            "203.0.113.0/24",
+            "geoip:private",
+            "geoip:cn",
             "100.100.100.100/32",
             "188.188.188.188/32",
-            "110.110.110.110/32",
-            "104.160.185.171/32",
-            "::1/128",
-            "fc00::/7",
-            "fe80::/10"
+            "110.110.110.110/32"
           ],
-          "outboundTag": "direct"
-        },
-        {
-          "type": "chinaip",
           "outboundTag": "direct"
         }
       ]
     }
   }
 }
+
+
 ```
 
 terminal via sock5
