@@ -434,3 +434,9 @@ export ALL_PROXY=127.0.0.1:1087
 wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/iptables-pf.sh && chmod +x iptables-pf.sh && bash iptables-pf.sh
 
 ```
+
+padavan 允许端口通过防火墙
+```
+ iptables -t filter -I INPUT -p tcp --dport $ssserver_port -j ACCEPT                                 
+ iptables -t filter -I INPUT -p udp --dport $ssserver_port -j ACCEPT 
+```
