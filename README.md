@@ -446,7 +446,7 @@ udpraw+kcptun+ss
 ```
   nohup ./server_linux_amd64 -t "127.0.0.1:17777" -l ":4000" -mode fast2 -mtu 1300 &
 
-  nohup ./udp2raw_amd64 -s -l 0.0.0.0:8855 -r 127.0.0.1:4000 --raw-mode faketcp -a &
+  nohup ./udp2raw_amd64 -s -l 0.0.0.0:8855 -r 127.0.0.1:4000 --raw-mode faketcp -a & disown
 
   nohup /media/AiDisk_a1/client_linux_mipsle -r "127.0.0.1:4000" -l ":3322" -mode fast2 -mtu 1300 &
 
