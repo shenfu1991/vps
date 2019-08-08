@@ -440,3 +440,15 @@ padavan 允许端口通过防火墙
  iptables -t filter -I INPUT -p tcp --dport $ssserver_port -j ACCEPT                                 
  iptables -t filter -I INPUT -p udp --dport $ssserver_port -j ACCEPT 
 ```
+
+udpraw+kcptun+ss
+
+```
+  nohup ./server_linux_amd64 -t "127.0.0.1:17777" -l ":4000" -mode fast2 -mtu 1300 &
+
+  nohup ./udp2raw_amd64 -s -l 0.0.0.0:8855 -r 127.0.0.1:4000 --raw-mode faketcp -a &
+
+  nohup /media/AiDisk_a1/client_linux_mipsle -r "127.0.0.1:4000" -l ":3322" -mode fast2 -mtu 1300 &
+
+  nohup /media/AiDisk_a1/udp2raw_mips24kc_le -c -r 173.242.123.117:8855 -l 0.0.0.0:4000 --raw-mode faketcp -a &
+```
