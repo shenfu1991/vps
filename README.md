@@ -428,6 +428,10 @@ mac终端 代理http
 ```
 export ALL_PROXY=127.0.0.1:1087
 ```
+重置代理
+```
+unset http_proxy
+```
 
 端口转发
 ```
