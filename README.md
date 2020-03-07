@@ -503,3 +503,8 @@ sudo xattr -d com.apple.quarantine /Applications/xxxx.app
 注意：/Applications/xxxx.app 换成你的App路径
 重启App即可。
 
+loid
+
+<pre>
+0773003288596699
+</pre>
