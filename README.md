@@ -510,3 +510,8 @@ loid
 </pre>
 
 UBPSXXS7KCTOLVQN
+
+iphone 不停闪烁
+<pre>
+sudo killall -STOP -c usbd
+</pre>
