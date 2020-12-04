@@ -515,3 +515,8 @@ iphone 不停闪烁
 <pre>
 sudo killall -STOP -c usbd
 </pre>
+
+判断终端是否走代理
+<pre>
+curl cip.cc
+</pre>
