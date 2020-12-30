@@ -520,3 +520,13 @@ sudo killall -STOP -c usbd
 <pre>
 curl cip.cc
 </pre>
+
+
+<pre>
+rm: cannot remove `.user.ini‘: Operation not permitted in Linux delete file in rm-rf
+</pre>
+Go to the directory where `.user.ini' is located, execute lsattr -a, check the attributes of the files included under the file, and see that `.user.ini' has an'i' attribute, which means that the file or directory must not be changed arbitrarily. It is this attribute that causes:
+<pre>
+chattr -i .user.ini 
+</pre>
+
