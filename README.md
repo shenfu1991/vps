@@ -532,3 +532,10 @@ chattr -i .user.ini
 </pre>
 
 davinci21s Z54FSQYC6RSRLNPY
+
+
+查看文件夹大小
+
+<pre>
+du -sh ./*
+</pre>
