@@ -368,3 +368,12 @@ davinci21s Z54FSQYC6RSRLNPY
 <pre>
 du -sh ./*
 </pre>
+
+
+查找文件
+<pre>
+nano ./.config/Run.plist
+./.config/Run.plist
+
+find . -name "*.c"
+</pre>
