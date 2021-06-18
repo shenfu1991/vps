@@ -377,3 +377,12 @@ nano ./.config/Run.plist
 
 find . -name "*.c"
 </pre>
+
+m1 cocoapods
+<pre>
+sudo port install ruby27
+sudo port select --set ruby ruby27
+sudo gem update
+sudo gem install ffi
+sudo gem install cocoapods
+</pre>
