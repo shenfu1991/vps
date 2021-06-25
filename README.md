@@ -3,21 +3,6 @@
 无线中继
 ![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
   
-###virmach   
-  <pre>  
-  190100640099 534534
-  
-  gongji 167485957205
-  
-  长效6.5折优惠码：LEB35
-
-长效7折优惠码：LEB30
-
-zhujiceping15，终身8.5折，全场VPS均可使用，包括特价版本
-
-zhujiceping25，终身7.5折，特价版VPS不可用。
-</pre>  
-
 wordpress安装插件提示需要ftp账号和密码解决
 原创 2017年09月28日 20:11:47 标签：wordpress /插件 /ftp /密码 /账户 133
       在wordpress安装之后，想要安装一个插件来用，结果提示输入ftp账户与密码，而我本人根本不记得什么时候设置过ftp账户与密码。最后搜索了一下网上的解决方案，所需要更改wordpress文件夹的权限，代码如下：
@@ -36,20 +21,6 @@ sudo chown -R www  /home/wwwroot/hi/*
 ```
 只需要在文件路径之后再加一个/* ，具体原因对于我这种系统小白来讲也不清除，在此记录一下，希望能帮助到需要的人。
 
-
-1.zip命令
-```
-zip -r myfile.zip ./*
-```
-将当前目录下的所有文件和文件夹全部压缩成myfile.zip文件,－r表示递归压缩子目录下所有文件.
-
-2.unzip命令
-```
-unzip -o -d /home/sunny myfile.zip
-```
-把myfile.zip文件解压到 /home/sunny/
--o:不提示的情况下覆盖文件；
--d:-d /home/sunny 指明将文件解压缩到/home/sunny目录下；
 
 强制https
 ```
@@ -100,161 +71,6 @@ iptables -D INPUT 5（3306）
 chmod -R 777 apache-tomcat-8.5.20
 
 ```
-
-v2ray 透明代理
-
-```
-{
-  "log": {
-    "error": "/tmp/syslog.log",
-    "loglevel": "warning"
-  },
-  "inbounds":[
-    {
-      "port": 1088,
-      "listen": "192.168.123.1",
-      "protocol": "http",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "ip": "192.168.123.1"
-      },
-      "streamSettings": {
-        "sockopt": {
-          "mark": 255
-        }
-      }
-    },{
-    //inboundDetour
-      "port": "1099",
-      "listen": "0.0.0.0",
-      "protocol": "dokodemo-door",
-      "settings": {
-        "network": "tcp,udp",
-        "timeout": 30,
-        "followRedirect": true
-      }
-    }
-  ],
-  "outbounds":[
-  {
-    "protocol": "vmess",
-    "settings": {
-      "vnext": [
-        {
-          "address": "107.172.104.202",
-          "port": 31364,
-          "users": [
-            {
-              "id": "48fa8a1d-bb83-4b63-9e05-e2ca9f964411",
-              "alterId": 32
-            }
-          ]
-        }
-      ]
-    },
-    "streamSettings": {
-      "sockopt": {
-        "mark": 255
-      },
-      "network": "tcp",
-      "tcpSettings": {
-        "connectionReuse": true,
-        "header": {
-          "type": "http",
-          "request": {
-            "version": "1.1",
-            "method": "GET",
-            "path": ["/"],
-            "headers": {
-              "Host": ["www.163.com", "www.sogou.com"],
-              "User-Agent": [
-                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-                        "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/69.0.3497.91 Mobile/15E148 Safari/605.1"
-              ],
-              "Accept-Encoding": ["gzip, deflate"],
-              "Connection": ["keep-alive"],
-              "Pragma": "no-cache"
-            }
-          },
-          "response": {
-            "version": "1.1",
-            "status": "200",
-            "reason": "OK",
-            "headers": {
-              "Content-Type": ["application/octet-stream", "application/x-msdownload", "text/html", "application/x-shockwave-flash"],
-              "Transfer-Encoding": ["chunked"],
-              "Connection": ["keep-alive"],
-              "Pragma": "no-cache"
-            }
-          }
-        }
-      }
-    }
-  },{
-  //outboundDetour
-    "protocol": "freedom",
-    "settings": {},
-    "tag": "direct",
-    "streamSettings": {
-      "sockopt": {
-        "mark": 255
-      }
-    }
-  },{
-  //outboundDetour
-    "protocol": "blackhole",
-    "settings": {},
-    "tag": "blocked"
- }
-  ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "localhost"
-    ]
-  },
-  "routing": {
-    "strategy": "rules",
-    "settings": {
-      "rules": [
-        {
-          "type": "field",
-          "ip": [
-            "127.0.0.0/8",
-            "::1/128"
-          ],
-          "outboundTag": "blocked"
-        },
-        {
-          "type": "field",
-          "domain": [
-            "baidu.com",
-            "qq.com",
-            "geosite:cn"
-          ],
-          "outboundTag": "direct"
-        },
-        {
-          "type": "field",
-          "ip": [
-            "geoip:private",
-            "geoip:cn",
-            "100.100.100.100/32",
-            "188.188.188.188/32",
-            "110.110.110.110/32"
-          ],
-          "outboundTag": "direct"
-        }
-      ]
-    }
-  }
-}
-
-
-```
-
 
 ws+tls
 ```
@@ -379,6 +195,7 @@ find . -name "*.c"
 </pre>
 
 m1 cocoapods
+For users with Macports instead Homebrew this helped me:
 <pre>
 sudo port install ruby27
 sudo port select --set ruby ruby27
