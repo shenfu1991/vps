@@ -28,30 +28,13 @@ rewrite ^(.*)$  https://$host$1 permanent;
 ```
 
 
-#linux 环境变量
+export
 
- 一般来说，配置交叉编译工具链的时候需要指定编译工具的路径，此时就需要设置环境变量。例如我的mips-linux-gcc编译器在“/opt/au1200_rm /build_tools/bin”目录下，build_tools就是我的编译工具，则有如下三种方法来设置环境变量：
+<pre>
+export PATH=/path/usr/bin:"${PATH}"
+</pre>
 
-1、直接用export命令：
-```
-export PATH=$PATH:/opt/au1200_rm/build_tools/bin
-```
-
-例子 swift 路径：找到swift可执行路径 /usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
-结果为
-```
-export PATH=$PATH:/usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
-```
-
-修改profile文件：
-```
-vi /etc/profile
-```
-
-加入 
-```
-export PATH=$PATH:/usr/swift-4.2.4-RELEASE-ubuntu16.04/usr/bin
-```
+登录后启用，在 /etc/profile 文件末尾加入
 
 mysql 远程连接
 
