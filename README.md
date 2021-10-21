@@ -31,7 +31,7 @@ rewrite ^(.*)$  https://$host$1 permanent;
 export
 
 <pre>
-export PATH=/path/usr/bin:"${PATH}"
+export PATH=/路径/usr/bin:"${PATH}"
 </pre>
 
 登录后启用，在 /etc/profile 文件末尾加入
