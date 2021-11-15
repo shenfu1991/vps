@@ -186,3 +186,14 @@ sudo gem update
 sudo gem install ffi
 sudo gem install cocoapods
 </pre>
+
+
+客户端配置
+如果是想让主机所有用户都生效，修改/etc/ssh/ssh_config
+如果只想让本人生效，则修改 ~/.ssh/config
+https://blog.phpgao.com/keep_connect_ssh.html
+<pre>
+Host *
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+</pre>
