@@ -197,3 +197,9 @@ Host *
     ServerAliveInterval 30
     ServerAliveCountMax 3
 </pre>
+
+ubuntu查看进程被杀死原因
+代替dmesg | less，dmesg | grep -i kill可能会更有用。因此，
+<pre>
+grep /var/log/kern.log* -ie kill
+</pre>
