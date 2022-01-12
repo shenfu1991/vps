@@ -175,6 +175,9 @@ nano ./.config/Run.plist
 ./.config/Run.plist
 
 find . -name "*.c"
+
+find / -name +文件名
+
 </pre>
 
 m1 cocoapods
