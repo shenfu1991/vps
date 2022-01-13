@@ -206,3 +206,58 @@ ubuntu查看进程被杀死原因
 <pre>
 grep /var/log/kern.log* -ie kill
 </pre>
+
+<pre>
+
+VMess MD5 认证信息 淘汰机制 2022-1-6
+发表评论
+问题描述：
+
+好几个小伙伴向我反馈，其用一键脚本搭建的V2ray梯子，最近”不好用了”。
+
+大概率的影响因素，就是如本文标题所说的vmess md5认证信息，淘汰机制的影响。
+
+官方的链接说明： https://www.v2fly.org/config/protocols/vmess.html
+
+自 2022 年 1 月 1 日起，服务器端将默认禁用对于 MD5 认证信息 的兼容。
+
+
+换成大白话就是，在2022-1-1开始，服务端的V2ray会默认自动拒绝旧版的Header，造成客户端发送的连接请求，在服务端进程上被拒绝连接。
+
+常见的报错信息如下:
+
+2022/01/02 16:26:41 127.0.0.1:57634 rejected common/drain: common/drain: unable to drain connection > websocket: close 1000 (normal) > proxy/vmess/encoding: invalid user: VMessAEAD is enforced and a non VMessAEAD connection is received. You can still disable this security feature with environment variable v2ray.vmess.aead.forced = false . You will not be able to enable legacy header workaround in the future.
+
+// 当 alertID >0 时，VMess 出站仍将使用 VMess MD5
+
+// 影响的版本范围 4.35.0
+
+因为，不同平台，不同的客户端，开发者适配工作暂时未完成，且为了兼容很多不懂升级客户端的人，暂时应优先考虑将V2RAY_VMESS_AEAD_FORCED在环境变量中关闭的方式。
+
+处理的办法1
+
+修改systemd服务
+
+修改 /etc/systemd/system/v2ray.service
+
+增加一行内容
+
+Environment="V2RAY_VMESS_AEAD_FORCED=false"
+增加完，重启服务即可
+
+systemctl daemon-reload
+
+systemctl restart v2ray
+处理办法2
+
+修改systemd服务
+
+修改 /etc/systemd/system/v2ray.service
+
+ExecStart=/usr/bin/env v2ray.vmess.aead.forced=false /usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
+增加完，重启服务即可
+
+systemctl daemon-reload
+
+systemctl restart v2ray
+</pre>
