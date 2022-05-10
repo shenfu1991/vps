@@ -1,10 +1,7 @@
 
 
-无线中继
-![image](https://raw.githubusercontent.com/mengzhihoing/vps/master/屏幕快照 2017-01-01 上午2.13.31.png)  
-  
+
 wordpress安装插件提示需要ftp账号和密码解决
-原创 2017年09月28日 20:11:47 标签：wordpress /插件 /ftp /密码 /账户 133
       在wordpress安装之后，想要安装一个插件来用，结果提示输入ftp账户与密码，而我本人根本不记得什么时候设置过ftp账户与密码。最后搜索了一下网上的解决方案，所需要更改wordpress文件夹的权限，代码如下：
 
 ```
@@ -67,69 +64,7 @@ ws+tls
       }
 ```
 
-padavan 允许端口通过防火墙
-```
- iptables -t filter -I INPUT -p tcp --dport $ssserver_port -j ACCEPT                                 
- iptables -t filter -I INPUT -p udp --dport $ssserver_port -j ACCEPT 
-```
-
 Aj736hs6@gmail.com    lymankimberly068 agxcf64h7@yahoo.com (754) 216-8163
-
-nginx 配置
-```
-server {
-       listen 80;
-       listen [::]:80;
-
-       server_name sh.xuanyuanhuangdi.org;
-
-       root /home/www/sh.xuanyuanhuangdi.org;
-       index index.html;
-
-       location / {
-               try_files $uri $uri/ =404;
-       }
-}
-
-server
-    {
-        listen 443 ssl;  # 1.1版本后这样写
-        server_name sh.xuanyuanhuangdi.org; #填写绑定证书的域名
-        ssl_certificate   /root/.acme.sh/sh.xuanyuanhuangdi.org/sh.xuanyuanhuangdi.org.cer;
-        ssl_certificate_key   /root/.acme.sh/sh.xuanyuanhuangdi.org/sh.xuanyuanhuangdi.org.key;
-        ssl_session_timeout 5m;
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #按照这个协议配置
-        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;#按 $
-        ssl_prefer_server_ciphers on;
-
-        root /home/www/sh.xuanyuanhuangdi.org;
-
-        location /shenfu1991 { #/ray提供流量重定向功能，匹配转发翻墙流量，客户 $
-            proxy_redirect off;
-            proxy_pass http://127.0.0.1:8765;#翻墙流量转发给10000端口，v2ray配 $
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_set_header Host $http_host;
-       }
-
-        access_log off;
-    }
-
-
-```
-
-App 在macOS Catalina下提示已损坏无法打开解决办法：
-
-打开终端；
-输入以下命令，回车；
-
-```
-sudo xattr -d com.apple.quarantine /Applications/xxxx.app
-
-```
-注意：/Applications/xxxx.app 换成你的App路径
-重启App即可。
 
 loid
 
@@ -178,16 +113,6 @@ find . -name "*.c"
 
 find / -name +文件名
 
-</pre>
-
-m1 cocoapods
-For users with Macports instead Homebrew this helped me:
-<pre>
-sudo port install ruby27
-sudo port select --set ruby ruby27
-sudo gem update
-sudo gem install ffi
-sudo gem install cocoapods
 </pre>
 
 
