@@ -133,6 +133,8 @@ grep /var/log/kern.log* -ie kill
 </pre>
 
 <pre>
+journalctl -xb | egrep -i 'tx'</pre>
+<pre>
 
 VMess MD5 认证信息 淘汰机制 2022-1-6
 发表评论
