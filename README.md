@@ -188,3 +188,23 @@ systemctl daemon-reload
 
 systemctl restart v2ray
 </pre>
+
+<pre>
+[Unit]
+Description=V2Ray Service
+Documentation=https://www.v2fly.org/
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+Environment="V2RAY_VMESS_AEAD_FORCED=false"
+
+[Install]
+WantedBy=multi-user.target
+</pre>
