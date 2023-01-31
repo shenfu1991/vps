@@ -208,3 +208,36 @@ Environment="V2RAY_VMESS_AEAD_FORCED=false"
 [Install]
 WantedBy=multi-user.target
 </pre>
+
+
+
+修改开机启动文件：/etc/rc.local（或者/etc/rc.d/rc.local）
+
+<pre>
+#!/bin/bash
+
+/root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true 
+
+export http_proxy="socks5://127.0.0.1:1080" 
+
+export https_proxy="socks5://127.0.0.1:1080"
+
+exit 0
+
+</pre>
+
+然后设置权限
+<pre>
+chmod +x  /etc/rc.local
+chmod 755 /etc/rc.local
+</pre>
+
+gost 服务端代理
+<pre>
+/root/gost -L=socks5://:9119
+</pre>
+
+gost 客户端代理
+<pre>
+/root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true
+</pre>
