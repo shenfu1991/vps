@@ -212,6 +212,9 @@ WantedBy=multi-user.target
 
 
 修改开机启动文件：/etc/rc.local（或者/etc/rc.d/rc.local）
+创建软链接
+$ sudo ln -s /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
+重启系统 rc.local 就生效了。
 
 <pre>
 #!/bin/bash
@@ -241,3 +244,49 @@ gost 客户端代理
 <pre>
 /root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true
 </pre>
+
+Ubuntu14.04设置网络代理
+buntu下apt-get的网络代理设置（终端命令行的网络代理设置）
+
+方法一：
+
+如果只是想临时使用http代理，可以在使用apt-get之前于终端下输入：export http_proxy="http://用户名:密码@代理IP:代理端口"
+
+方法二：（方法一的持久化）
+
+如果希望apt-get与其它应用程序都可以一直使用http代理，可以这样：
+
+在终端下编辑~/.bashrc文件：　　vim ~/.bashrc
+
+在文件末尾添加如下两句：
+
+export http_proxy=http://用户名:密码@代理地址:代理端口
+export https_proxy=http://用户名:密码@代理地址:代理端口
+export no_proxy="127.0.0.1, localhost, *.cnn.com, 192.168.1.10, domain.com:8080"
+
+然后执行下面命令，使环境变量生效
+
+source ~/.bashrc
+
+方法三：
+
+如果只是希望apt-get使用代理，可以这样：
+
+在终端下编辑/etc/apt/apt.conf加入下面这行，
+
+Acquire::http::Proxy “http://yourproxyaddress:proxyport”;
+
+保存退出apt.conf。
+
+四：如果是Redhat Linux，则
+
+在profile文件中设置相关环境变量
+
+vi /etc/profile
+http_proxy=http://用户名:密码@代理服务器地址:端口
+
+这样在终端下便可以通过代理上网了_
+
+1人点赞
+Ubuntu Linux
+
