@@ -290,3 +290,21 @@ http_proxy=http://用户名:密码@代理服务器地址:端口
 1人点赞
 Ubuntu Linux
 
+
+**ubuntu 修改ssh端口**
+
+一、找到ssh配置文件位置
+
+vi /etc/ssh/sshd_config
+
+ 
+
+二、修改ssh登录端口号修改port22为
+
+port xxxx
+
+ 
+
+三、重启ssh服务
+
+/etc/init.d/ssh restart
