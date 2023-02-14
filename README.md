@@ -235,16 +235,6 @@ chmod +x  /etc/rc.local
 chmod 755 /etc/rc.local
 </pre>
 
-gost 服务端代理
-<pre>
-/root/gost -L=socks5://:9119
-</pre>
-
-gost 客户端代理
-<pre>
-/root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true
-</pre>
-
 Ubuntu14.04设置网络代理
 buntu下apt-get的网络代理设置（终端命令行的网络代理设置）
 
@@ -256,7 +246,8 @@ buntu下apt-get的网络代理设置（终端命令行的网络代理设置）
 
 如果希望apt-get与其它应用程序都可以一直使用http代理，可以这样：
 
-在终端下编辑~/.bashrc文件：　　vim ~/.bashrc
+在终端下编辑~/.bashrc文件：　
+vim ~/.bashrc
 
 在文件末尾添加如下两句：
 
@@ -265,55 +256,32 @@ export https_proxy=http://用户名:密码@代理地址:代理端口
 export no_proxy="127.0.0.1, localhost, *.cnn.com, 192.168.1.10, domain.com:8080"
 
 然后执行下面命令，使环境变量生效
-
+<pre>
 source ~/.bashrc
-
-方法三：
-
-如果只是希望apt-get使用代理，可以这样：
-
-在终端下编辑/etc/apt/apt.conf加入下面这行，
-
-Acquire::http::Proxy “http://yourproxyaddress:proxyport”;
-
-保存退出apt.conf。
-
-四：如果是Redhat Linux，则
-
-在profile文件中设置相关环境变量
-
-vi /etc/profile
-http_proxy=http://用户名:密码@代理服务器地址:端口
-
-这样在终端下便可以通过代理上网了_
-
-1人点赞
-Ubuntu Linux
+</pre>
 
 
 **ubuntu 修改ssh端口**
 
 一、找到ssh配置文件位置
-
+<pre>
 vi /etc/ssh/sshd_config
-
- 
+</pre>
 
 二、修改ssh登录端口号修改port22为
-
+<pre>
 port xxxx
-
- 
+</pre>
 
 三、重启ssh服务
-
-/etc/init.d/ssh restart
+<pre>
+/etc/init.d/ssh restart. 
+</pre>
 
 
 gost加认证
 <pre>
  nohup /root/gost -L http://shenfu:shenfu1991@:59119 &
-
 
  nohup /root/gost -L=:18888 -F=http://shenfu:shenfu1991@uscn.xuanyuanhuangdi.org:59119 &
 </pre>
