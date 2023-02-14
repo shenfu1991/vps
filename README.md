@@ -308,3 +308,12 @@ port xxxx
 三、重启ssh服务
 
 /etc/init.d/ssh restart
+
+
+gost加认证
+<pre>
+ nohup /root/gost -L http://shenfu:shenfu1991@:59119 &
+
+
+ nohup /root/gost -L=:18888 -F=http://shenfu:shenfu1991@uscn.xuanyuanhuangdi.org:59119 &
+</pre>
