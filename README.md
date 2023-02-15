@@ -275,7 +275,7 @@ port xxxx
 
 三、重启ssh服务
 <pre>
-/etc/init.d/ssh restart. 
+/etc/init.d/ssh restart
 </pre>
 
 
