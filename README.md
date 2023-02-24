@@ -285,3 +285,53 @@ gost加认证
 
  nohup /root/gost -L=:18888 -F=http://shenfu:shenfu1991@uscn.xuanyuanhuangdi.org:59119 &
 </pre>
+
+
+
+**自建文件服务器**
+<pre>
+docker run --name oasis -t -d \
+-v /opt/oasis/data:/opt/oasis/data \
+-v /home/storage:/home/storage \
+-p 8000:8000 machengim/oasis
+</pre>
+
+nginx 配置
+
+在 server 的同级节点添加如下配置：
+<pre>
+
+upstream halo {
+  server 127.0.0.1:8000;
+}
+</pre>
+
+
+在 server 节点添加如下配置
+<pre>
+location / {
+  proxy_set_header HOST $host;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_pass http://halo;
+}
+</pre>
+
+修改 location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ 节点. 
+<pre>
+location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ {
+  proxy_pass http://halo; #增加这行
+  expires 30d;
+  access_log off;
+ }
+</pre>
+
+修改 location ~ .*\.(js|css)?$ 节点
+<pre>
+location ~ .*\.(js|css)?$ {
+  proxy_pass http://halo; #增加这行
+  expires 7d;
+  access_log off;
+}
+</pre>
