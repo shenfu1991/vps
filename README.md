@@ -335,3 +335,8 @@ location ~ .*\.(js|css)?$ {
   access_log off;
 }
 </pre>
+
+ pushd: not found
+<pre>
+sudo dpkg-reconfigure dash
+</pre>
