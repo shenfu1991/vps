@@ -349,3 +349,8 @@ v2
 <pre>
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 </pre>
+
+查看文件夹大小
+<pre>
+du -h --max-depth=0 ./*
+</pre>
