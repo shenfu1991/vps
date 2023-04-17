@@ -354,3 +354,8 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 <pre>
 du -h --max-depth=0 ./*
 </pre>
+
+A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx 会尝试从后端缓冲一定大小的数据再发送给浏览器。请尝试在反代参数后添加
+<pre> proxy_buffering off; </pre>
+
+，然后重载 Nginx。其他 web server 配置同理。
