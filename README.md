@@ -316,3 +316,19 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 <pre> proxy_buffering off; </pre>
 
 ，然后重载 Nginx。其他 web server 配置同理。
+
+ubuntu限速
+
+<pre>
+      sudo apt install trickle
+</pre>
+
+限制bash速度1M/s
+<pre>
+trickle -d 1024 -u 1024 bash
+</pre>
+
+限制所有应用速度1M/s
+<pre>
+trickled -d 1024 -u 1024 -s
+</pre>
