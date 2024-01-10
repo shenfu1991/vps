@@ -320,7 +320,7 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 ubuntu限速
 
 <pre>
-      sudo apt install trickle
+sudo apt install trickle
 </pre>
 
 限制bash速度1M/s
