@@ -320,15 +320,9 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 ubuntu限速
 
 <pre>
-sudo apt install trickle
-</pre>
+sudo tc qdisc add dev eth0 root tbf rate 800kbit burst 16kbit latency 50ms
 
-限制bash速度1M/s
-<pre>
-trickle -d 1024 -u 1024 bash
-</pre>
+sudo tc qdisc del dev eth0 root
 
-限制所有应用速度1M/s
-<pre>
-trickled -d 1024 -u 1024 -s
+wget https://download.swift.org/swift-5.9.2-release/ubuntu2204/swift-5.9.2-RELEASE/swift-5.9.2-RELEASE-ubuntu22.04.tar.gz
 </pre>
