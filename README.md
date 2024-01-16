@@ -325,4 +325,9 @@ sudo tc qdisc add dev eth0 root tbf rate 800kbit burst 16kbit latency 50ms
 sudo tc qdisc del dev eth0 root
 
 wget https://download.swift.org/swift-5.9.2-release/ubuntu2204/swift-5.9.2-RELEASE/swift-5.9.2-RELEASE-ubuntu22.04.tar.gz
+
+
+sudo tc qdisc add dev eth0 root netem delay 100ms    
+
+      
 </pre>
