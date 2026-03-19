@@ -331,3 +331,10 @@ sudo tc qdisc add dev eth0 root netem delay 100ms
 
       
 </pre>
+
+
+列出当前目录下文件夹大小
+
+<pre>
+du -h --max-depth=1
+</pre>
