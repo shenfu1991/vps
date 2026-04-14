@@ -338,3 +338,16 @@ sudo tc qdisc add dev eth0 root netem delay 100ms
 <pre>
 du -h --max-depth=1
 </pre>
+
+姓名测试
+<pre>
+https://m.meimingteng.com/m/ceming.aspx
+</pre>
+
+<pre>
+http://www.gfname.com/app2/index.php
+</pre>
+
+<pre>
+http://ceming.taijiyu.net/CeMing.aspx
+</pre>
