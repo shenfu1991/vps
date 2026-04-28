@@ -351,3 +351,71 @@ http://www.gfname.com/app2/index.php
 <pre>
 http://ceming.taijiyu.net/CeMing.aspx
 </pre>
+
+
+
+
+自建rustDesk
+
+下载server
+<pre>
+ https://github.com/rustdesk/rustdesk-server/releases/download/1.1.15/rustdesk-server-linux-amd64.zip
+</pre>
+
+开发端口、**国内服务器需要打开防火墙**
+ufw allow 21115:21119/tcp
+ufw allow 21115:21119/udp
+
+nano /etc/systemd/system/hbbs.service 
+<pre>
+[Unit]
+Description=RustDesk Signal Server (hbbs)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/rustdesk
+ExecStart=/root/rustdesk/hbbs
+Restart=always
+RestartSec=3
+
+# 提高稳定性
+LimitNOFILE=100000
+
+# 安全隔离（可选但建议）
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+
+nano /etc/systemd/system/hbbr.service 
+<pre>
+[Unit]
+Description=RustDesk Relay Server (hbbr)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/rustdesk
+ExecStart=/root/rustdesk/hbbr
+Restart=always
+RestartSec=3
+
+LimitNOFILE=100000
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+systemctl daemon-reexec
+systemctl enable hbbs hbbr
+systemctl start hbbs hbbr
+
+开机启动
+sudo systemctl enable hbbs
+sudo systemctl enable hbbr
+
+** id_ed25519  id_ed25519.pub 都要保存**
