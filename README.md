@@ -137,38 +137,10 @@ grep /var/log/kern.log* -ie kill
 </pre>
 
 <pre>
-journalctl -xb | egrep -i 'tx'</pre>
-<pre>
-
-修改 /etc/systemd/system/v2ray.service
-
-Environment="V2RAY_VMESS_AEAD_FORCED=false"
-增加完，重启服务即可
-
-systemctl daemon-reload
-
-systemctl restart v2ray
+journalctl -xb | egrep -i 'tx'
 </pre>
 
-<pre>
-[Unit]
-Description=V2Ray Service
-Documentation=https://www.v2fly.org/
-After=network.target nss-lookup.target
 
-[Service]
-User=nobody
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-Environment="V2RAY_VMESS_AEAD_FORCED=false"
-
-[Install]
-WantedBy=multi-user.target
-</pre>
 
 
 
@@ -305,6 +277,17 @@ sudo dpkg-reconfigure dash
 v2
 <pre>
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+
+nano /etc/systemd/system/v2ray.service
+
+在RestartPreventExitStatus=23下增加
+      
+Environment="V2RAY_VMESS_AEAD_FORCED=false"
+增加完，重启服务即可
+
+systemctl daemon-reload
+systemctl restart v2ray
+      
 </pre>
 
 查看文件夹大小
