@@ -290,6 +290,18 @@ systemctl restart v2ray
       
 </pre>
 
+ws+tls
+```
+      location /ray { #/ray提供流量重定向功能，匹配转发翻墙流量，客户端中伪装$
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:10000;#翻墙流量转发给10000端口，v2ray配置>$
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+      }
+```
+
 查看文件夹大小
 <pre>
 du -h --max-depth=0 ./*
@@ -299,21 +311,6 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 <pre> proxy_buffering off; </pre>
 
 ，然后重载 Nginx。其他 web server 配置同理。
-
-ubuntu限速
-
-<pre>
-sudo tc qdisc add dev eth0 root tbf rate 800kbit burst 16kbit latency 50ms
-
-sudo tc qdisc del dev eth0 root
-
-wget https://download.swift.org/swift-5.9.2-release/ubuntu2204/swift-5.9.2-RELEASE/swift-5.9.2-RELEASE-ubuntu22.04.tar.gz
-
-
-sudo tc qdisc add dev eth0 root netem delay 100ms    
-
-      
-</pre>
 
 
 列出当前目录下文件夹大小
