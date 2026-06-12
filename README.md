@@ -56,18 +56,6 @@ chmod -R 777 apache-tomcat-8.5.20
 
 ```
 
-ws+tls
-```
-      location /ray { #/ray提供流量重定向功能，匹配转发翻墙流量，客户端中伪装$
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:10000;#翻墙流量转发给10000端口，v2ray配置>$
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $http_host;
-      }
-```
-
 Aj736hs6@gmail.com    lymankimberly068 agxcf64h7@yahoo.com (754) 216-8163
 
 loid
@@ -399,3 +387,13 @@ sudo systemctl enable hbbs
 sudo systemctl enable hbbr
 
 ** id_ed25519  id_ed25519.pub 都要保存**
+
+
+一键DD ubuntu
+<pre>
+curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
+
+bash reinstall.sh ubuntu 24.04 \
+  --password '你的密码' \
+  --ssh-port 22
+</pre>
