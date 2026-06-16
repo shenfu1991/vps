@@ -397,3 +397,214 @@ bash reinstall.sh ubuntu 24.04 \
   --password '你的密码' \
   --ssh-port 22
 </pre>
+
+xray
+
+<pre>
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+
+      xray uuid
+
+      xray x25519
+      
+</pre>
+
+sudo nano /usr/local/etc/xray/config.json
+
+<pre>
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 8443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "www.microsoft.com:443",
+          "xver": 0,
+          "serverNames": [
+            "www.microsoft.com"
+          ],
+          "privateKey": "",
+          "shortIds": [
+            "ab433c585465f802"
+          ]
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom"
+    }
+  ]
+}
+   
+</pre>
+
+xray run -test -config /usr/local/etc/xray/config.json
+
+sudo systemctl restart xray
+sudo systemctl enable xray
+sudo systemctl status xray
+
+
+
+
+-----------------
+
+
+共享443端口
+
+SNI 分流搭建 Reality + XTLS-RPRX-Vision 完整操作记录
+环境说明
+
+系统：Ubuntu/Debian
+Nginx：编译安装，路径 /usr/local/nginx/
+Xray：已安装，路径 /usr/local/bin/xray
+目标：443 端口 SNI 分流，Reality 流量给 Xray，网站流量给 Nginx
+
+# 确认 Nginx 有 stream 模块
+nginx -V 2>&1 | grep -o 'with-stream[^ ]*'
+
+# 查看 443 监听分布
+grep -rn "listen.*443" /etc/nginx/
+
+# 确认 Xray 状态
+xray version
+systemctl status xray | head -5
+
+原因： apt 安装的 Nginx，stream 是动态模块，需要手动安装并加载。
+
+<pre>
+# 第一步：安装动态模块包
+apt install -y libnginx-mod-stream
+
+# 第二步：确认模块文件存在
+ls /usr/lib/nginx/modules/ | grep stream
+# 应看到 ngx_stream_module.so
+
+# 第三步：在 nginx.conf 第一行手动加载模块
+sed -i '1s/^/load_module \/usr\/lib\/nginx\/modules\/ngx_stream_module.so;\n/' \
+  /etc/nginx/nginx.conf
+
+# 确认第一行正确
+head -3 /etc/nginx/nginx.conf
+</pre>
+
+
+第三步：修改网站 Nginx 配置
+将网站的 443 监听改为本地 4443，每个网站配置文件都要执行：
+
+<pre>
+      # 替换 IPv4 监听
+sed -i 's/listen 443 ssl http2;/listen 127.0.0.1:4443 ssl http2;/g' \
+  /root/vhost/*.conf
+
+# 替换 IPv6 监听（如果有）— 注意：会被替换成和上面一样，需要删掉重复行
+sed -i 's/listen \[::\]:443 ssl http2;/listen 127.0.0.1:4443 ssl http2;/g' \
+   /root/vhost/*.conf
+</pre>
+
+
+第四步：在 Nginx 主配置加 stream 块
+
+<pre>
+cat >> /etc/nginx/nginx.conf << 'EOF'
+
+stream {
+    map $ssl_preread_server_name $backend {
+        www.microsoft.com   127.0.0.1:8443;
+        default             127.0.0.1:4443;
+    }
+
+    server {
+        listen 0.0.0.0:443;
+        proxy_pass $backend;
+        ssl_preread on;
+        proxy_connect_timeout 10s;
+        proxy_timeout 300s;
+    }
+}
+EOF
+</pre>
+
+第五步：修改 Xray 配置
+  "listen": "127.0.0.1",
+  "port": 8443,
+
+systemctl restart xray
+nginx -s reload
+
+# 1. 确认端口监听
+ss -tlnp | grep -E '443|4443|8443'
+
+
+# 2. 测试 SNI 分流（替换为你的 VPS IP）
+echo | openssl s_client -connect VPS_IP:443 \
+  -servername 你的网站域名 2>&1 | grep "subject="
+# 应返回你自己的证书
+
+echo | openssl s_client -connect VPS_IP:443 \
+  -servername www.microsoft.com 2>&1 | grep "subject="
+# 应返回微软的证书
+
+apt 安装 Nginx 的完整操作顺序
+<pre>
+# 1. 安装 stream 模块
+apt install -y libnginx-mod-stream
+
+# 2. nginx.conf 顶部加载模块
+sed -i '1s/^/load_module \/usr\/lib\/nginx\/modules\/ngx_stream_module.so;\n/' \
+  /etc/nginx/nginx.conf
+
+# 3. 批量修改网站配置 443 → 4443
+sed -i 's/listen 443 ssl/listen 127.0.0.1:4443 ssl/g' /etc/nginx/sites-enabled/*
+sed -i 's/listen 443 ssl/listen 127.0.0.1:4443 ssl/g' /root/vhost/*.conf
+# 删除重复的 IPv6 监听行（如有）
+# 检查：grep -rn "listen.*443" /etc/nginx/sites-enabled/ /root/vhost/
+
+# 4. 在 nginx.conf 末尾追加 stream 块（纯文本，不要复制带超链接的）
+cat >> /etc/nginx/nginx.conf << 'EOF'
+
+stream {
+    map $ssl_preread_server_name $backend {
+        www.microsoft.com   127.0.0.1:8443;
+        default             127.0.0.1:4443;
+    }
+
+    server {
+        listen 0.0.0.0:443;
+        proxy_pass $backend;
+        ssl_preread on;
+        proxy_connect_timeout 10s;
+        proxy_timeout 300s;
+    }
+}
+EOF
+
+# 5. 修改 Xray 只监听本地
+sed -i 's/"listen": "0.0.0.0"/"listen": "127.0.0.1"/' \
+  /usr/local/etc/xray/config.json
+
+# 6. 验证并启动
+nginx -t && systemctl restart nginx && systemctl restart xray
+
+# 7. 确认端口
+ss -tlnp | grep -E '443|4443|8443'
+ </pre>
