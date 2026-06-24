@@ -1,235 +1,337 @@
+# WordPress 安装插件提示需要 FTP 账号和密码的解决方法
 
+WordPress 安装完成后，安装插件时可能会提示输入 FTP 账号和密码。通常这是因为 WordPress 目录权限不正确，需要调整站点目录的所属用户。
 
+## 1. 修改 WordPress 目录权限
 
-wordpress安装插件提示需要ftp账号和密码解决
-      在wordpress安装之后，想要安装一个插件来用，结果提示输入ftp账户与密码，而我本人根本不记得什么时候设置过ftp账户与密码。最后搜索了一下网上的解决方案，所需要更改wordpress文件夹的权限，代码如下：
+假设 WordPress 安装路径为 `/home/wwwroot/hi`，可以尝试执行：
 
+```bash
+sudo chown -R www /home/wwwroot/hi
 ```
-sudo chown -R www  /home/wwwroot/hi
-```
-后面的文件路径是自己安装wordpress时的路径。
-可是按照这样操作之后，系统报错：
-```
+
+如果出现以下报错：
+
+```text
 chown: changing ownership of `/home/wwwroot/hi/.user.ini': Operation not permitted
 ```
-最后网上又找了一下解决方案，发现只需要如下更改之后就ok了：
-```
-sudo chown -R www  /home/wwwroot/hi/* 
-```
-只需要在文件路径之后再加一个/* ，具体原因对于我这种系统小白来讲也不清除，在此记录一下，希望能帮助到需要的人。
 
+可以改为只修改目录内文件：
 
-强制https
-```
-rewrite ^(.*)$  https://$host$1 permanent;
+```bash
+sudo chown -R www /home/wwwroot/hi/*
 ```
 
+说明：`/home/wwwroot/hi` 需要替换成你自己的 WordPress 安装路径。
 
-export
+---
 
-<pre>
+# 常用服务器运维笔记
+
+## 强制 HTTPS
+
+Nginx rewrite 配置：
+
+```nginx
+rewrite ^(.*)$ https://$host$1 permanent;
+```
+
+## 配置 PATH
+
+临时或写入配置文件时可使用：
+
+```bash
 export PATH=/路径/usr/bin:"${PATH}"
-</pre>
+```
 
-<pre>
+或：
+
+```bash
 export PATH=/路径/usr/bin:$PATH
-</pre>
-
-登录后启用，在 /etc/profile 文件末尾加入
-
-mysql 远程连接
-
-```
-GRANT ALL  PRIVILEGES ON *.* TO 'shenfu'@'124.79.91.133'IDENTIFIED BY 'shenfu1991' WITH GRANT OPTION;   
-FLUSH  PRIVILEGES;
 ```
 
-防火墙
+如需登录后自动启用，可加入 `/etc/profile` 文件末尾。
+
+## MySQL 远程连接授权
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'shenfu'@'124.79.91.133' IDENTIFIED BY 'shenfu1991' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 ```
+
+## 防火墙规则
+
+查看规则编号：
+
+```bash
 iptables -L -n --line-numbers
+```
+
+删除指定规则：
+
+```bash
 iptables -D INPUT 5（3306）
 ```
 
-以下命令行修改指定目录下的所有文件的权限为全体可读、可修改、可执行
-```
+## 修改目录权限
+
+将指定目录下所有文件设置为所有用户可读、可写、可执行：
+
+```bash
 chmod -R 777 apache-tomcat-8.5.20
-
 ```
 
+注意：`777` 权限风险较高，生产环境应谨慎使用。
+
+## 杂项记录
+
+```text
 Aj736hs6@gmail.com    lymankimberly068 agxcf64h7@yahoo.com (754) 216-8163
+```
 
+```text
 loid
-
-<pre>
 0773003288596699
-</pre>
+```
 
+```text
 UBPSXXS7KCTOLVQN
 5I3GT6XCEXEFXUFT
+```
 
-iphone 不停闪烁
-<pre>
-sudo killall -STOP -c usbd
-</pre>
-
-判断终端是否走代理
-<pre>
-curl cip.cc
-</pre>
-
-
-<pre>
-rm: cannot remove `.user.ini‘: Operation not permitted in Linux delete file in rm-rf
-</pre>
-Go to the directory where `.user.ini' is located, execute lsattr -a, check the attributes of the files included under the file, and see that `.user.ini' has an'i' attribute, which means that the file or directory must not be changed arbitrarily. It is this attribute that causes:
-<pre>
-chattr -i .user.ini 
-</pre>
-
+```text
 davinci21s Z54FSQYC6RSRLNPY
+```
 
+## iPhone 不停闪烁
 
-查看文件夹大小
+```bash
+sudo killall -STOP -c usbd
+```
 
-<pre>
+## 判断终端是否走代理
+
+```bash
+curl cip.cc
+```
+
+## 删除 `.user.ini` 时提示 Operation not permitted
+
+错误示例：
+
+```text
+rm: cannot remove `.user.ini': Operation not permitted
+```
+
+可能原因是文件带有不可修改属性。进入 `.user.ini` 所在目录后查看属性：
+
+```bash
+lsattr -a
+```
+
+如果 `.user.ini` 带有 `i` 属性，可以先移除该属性：
+
+```bash
+chattr -i .user.ini
+```
+
+然后再删除或修改文件。
+
+## 查看文件夹大小
+
+```bash
 du -sh ./*
-</pre>
+```
 
+## 查找文件
 
-查找文件
-<pre>
+打开指定文件：
+
+```bash
 nano ./.config/Run.plist
-./.config/Run.plist
+```
 
+查找 C 文件：
+
+```bash
 find . -name "*.c"
+```
 
-find / -name +文件名
+按文件名全局查找：
 
-</pre>
+```bash
+find / -name "文件名"
+```
 
+## SSH 客户端保持连接
 
-客户端配置
-如果是想让主机所有用户都生效，修改/etc/ssh/ssh_config
-如果只想让本人生效，则修改 ~/.ssh/config
-https://blog.phpgao.com/keep_connect_ssh.html
-<pre>
+如果希望对主机所有用户生效，修改：
+
+```text
+/etc/ssh/ssh_config
+```
+
+如果只对当前用户生效，修改：
+
+```text
+~/.ssh/config
+```
+
+配置示例：
+
+```sshconfig
 Host *
     ServerAliveInterval 30
     ServerAliveCountMax 3
-</pre>
+```
 
-ubuntu查看进程被杀死原因
-代替dmesg | less，dmesg | grep -i kill可能会更有用。因此，
-<pre>
+参考链接：
+
+[SSH 保持连接](https://blog.phpgao.com/keep_connect_ssh.html)
+
+## Ubuntu 查看进程被杀死原因
+
+可以使用：
+
+```bash
 grep /var/log/kern.log* -ie kill
-</pre>
+```
 
-<pre>
+或：
+
+```bash
 journalctl -xb | egrep -i 'tx'
-</pre>
+```
 
+## 修改开机启动文件
 
+启动文件路径通常为：
 
+```text
+/etc/rc.local
+```
 
+或：
 
-修改开机启动文件：/etc/rc.local（或者/etc/rc.d/rc.local）
-创建软链接
-$ sudo ln -s /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
-重启系统 rc.local 就生效了。
+```text
+/etc/rc.d/rc.local
+```
 
-<pre>
+创建 systemd 软链接：
+
+```bash
+sudo ln -s /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
+```
+
+`/etc/rc.local` 示例：
+
+```bash
 #!/bin/bash
 
-/root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true 
+/root/gost -L=:1080 -F=socks5://uscn.xuanyuanhuangdi.org:9119?notls=true
 
-export http_proxy="socks5://127.0.0.1:1080" 
-
+export http_proxy="socks5://127.0.0.1:1080"
 export https_proxy="socks5://127.0.0.1:1080"
 
 exit 0
+```
 
-</pre>
+设置权限：
 
-然后设置权限
-<pre>
-chmod +x  /etc/rc.local
+```bash
+chmod +x /etc/rc.local
 chmod 755 /etc/rc.local
-</pre>
+```
 
-Ubuntu14.04设置网络代理
-buntu下apt-get的网络代理设置（终端命令行的网络代理设置）
+## Ubuntu 14.04 设置网络代理
 
-方法一：
+### 方法一：临时使用 HTTP 代理
 
-如果只是想临时使用http代理，可以在使用apt-get之前于终端下输入：export http_proxy="http://用户名:密码@代理IP:代理端口"
+```bash
+export http_proxy="http://用户名:密码@代理IP:代理端口"
+```
 
-方法二：（方法一的持久化）
+### 方法二：持久化代理配置
 
-如果希望apt-get与其它应用程序都可以一直使用http代理，可以这样：
+编辑 `~/.bashrc`：
 
-在终端下编辑~/.bashrc文件：　
+```bash
 vim ~/.bashrc
+```
 
-在文件末尾添加如下两句：
+在文件末尾添加：
 
-export http_proxy=http://用户名:密码@代理地址:代理端口
-export https_proxy=http://用户名:密码@代理地址:代理端口
-export no_proxy="127.0.0.1, localhost, *.cnn.com, 192.168.1.10, domain.com:8080"
+```bash
+export http_proxy="http://用户名:密码@代理地址:代理端口"
+export https_proxy="http://用户名:密码@代理地址:代理端口"
+export no_proxy="127.0.0.1,localhost,*.cnn.com,192.168.1.10,domain.com:8080"
+```
 
-然后执行下面命令，使环境变量生效
-<pre>
+使配置生效：
+
+```bash
 source ~/.bashrc
-</pre>
+```
 
+## Ubuntu 修改 SSH 端口
 
-**ubuntu 修改ssh端口**
+编辑 SSH 服务端配置文件：
 
-一、找到ssh配置文件位置
-<pre>
+```bash
 vi /etc/ssh/sshd_config
-</pre>
+```
 
-二、修改ssh登录端口号修改port22为
-<pre>
-port xxxx
-</pre>
+将默认端口改为需要的端口：
 
-三、重启ssh服务
-<pre>
+```sshconfig
+Port xxxx
+```
+
+重启 SSH 服务：
+
+```bash
 /etc/init.d/ssh restart
-</pre>
+```
 
+## gost 加认证
 
-gost加认证
-<pre>
- nohup /root/gost -L http://shenfu:shenfu1991@:59119 &
+启动带认证的 HTTP 服务：
 
- nohup /root/gost -L=:18888 -F=http://shenfu:shenfu1991@uscn.xuanyuanhuangdi.org:59119 &
-</pre>
+```bash
+nohup /root/gost -L http://shenfu:shenfu1991@:59119 &
+```
 
+通过上游代理转发：
 
+```bash
+nohup /root/gost -L=:18888 -F=http://shenfu:shenfu1991@uscn.xuanyuanhuangdi.org:59119 &
+```
 
-**自建文件服务器**
-<pre>
+## 自建文件服务器
+
+Docker 启动命令：
+
+```bash
 docker run --name oasis -t -d \
--v /opt/oasis/data:/opt/oasis/data \
--v /home/storage:/home/storage \
--p 8000:8000 machengim/oasis
-</pre>
+  -v /opt/oasis/data:/opt/oasis/data \
+  -v /home/storage:/home/storage \
+  -p 8000:8000 \
+  machengim/oasis
+```
 
-nginx 配置
+## Nginx 反向代理配置
 
-在 server 的同级节点添加如下配置：
-<pre>
+在 `server` 同级节点添加：
 
+```nginx
 upstream halo {
   server 127.0.0.1:8000;
 }
-</pre>
+```
 
+在 `server` 节点添加：
 
-在 server 节点添加如下配置
-<pre>
+```nginx
 location / {
   proxy_set_header HOST $host;
   proxy_set_header X-Forwarded-Proto $scheme;
@@ -237,105 +339,146 @@ location / {
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_pass http://halo;
 }
-</pre>
+```
 
-修改 location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ 节点. 
-<pre>
+修改 `location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$` 节点：
+
+```nginx
 location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ {
-  proxy_pass http://halo; #增加这行
+  proxy_pass http://halo; # 增加这行
   expires 30d;
   access_log off;
- }
-</pre>
+}
+```
 
-修改 location ~ .*\.(js|css)?$ 节点
-<pre>
+修改 `location ~ .*\.(js|css)?$` 节点：
+
+```nginx
 location ~ .*\.(js|css)?$ {
-  proxy_pass http://halo; #增加这行
+  proxy_pass http://halo; # 增加这行
   expires 7d;
   access_log off;
 }
-</pre>
+```
 
- pushd: not found
-<pre>
+## pushd: not found
+
+```text
+pushd: not found
+```
+
+可尝试重新配置 `dash`：
+
+```bash
 sudo dpkg-reconfigure dash
-</pre>
+```
 
-v2
-<pre>
+## v2ray
+
+安装：
+
+```bash
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+```
 
+编辑服务文件：
+
+```bash
 nano /etc/systemd/system/v2ray.service
+```
 
-在RestartPreventExitStatus=23下增加
-      
+在 `RestartPreventExitStatus=23` 下增加：
+
+```ini
 Environment="V2RAY_VMESS_AEAD_FORCED=false"
-增加完，重启服务即可
+```
 
+增加完成后，重启服务：
+
+```bash
 systemctl daemon-reload
 systemctl restart v2ray
-      
-</pre>
-
-ws+tls
-```
-      location /ray { #/ray提供流量重定向功能，匹配转发翻墙流量，客户端中伪装$
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:10000;#翻墙流量转发给10000端口，v2ray配置>$
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $http_host;
-      }
 ```
 
-查看文件夹大小
-<pre>
+## ws + tls
+
+Nginx 配置示例：
+
+```nginx
+location /ray {
+  proxy_redirect off;
+  proxy_pass http://127.0.0.1:10000;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "upgrade";
+  proxy_set_header Host $http_host;
+}
+```
+
+## 查看文件夹大小
+
+```bash
 du -h --max-depth=0 ./*
-</pre>
+```
 
-A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx 会尝试从后端缓冲一定大小的数据再发送给浏览器。请尝试在反代参数后添加
-<pre> proxy_buffering off; </pre>
+列出当前目录下文件夹大小：
 
-，然后重载 Nginx。其他 web server 配置同理。
-
-
-列出当前目录下文件夹大小
-
-<pre>
+```bash
 du -h --max-depth=1
-</pre>
+```
 
-姓名测试
-<pre>
+## Nginx 反向代理关闭 buffer
+
+一种可能原因是经过 Nginx 反向代理时开启了 buffer，Nginx 会尝试从后端缓冲一定大小的数据再发送给浏览器。
+
+可在反代参数后添加：
+
+```nginx
+proxy_buffering off;
+```
+
+然后重载 Nginx。其他 Web Server 配置同理。
+
+## 姓名测试
+
+```text
 https://m.meimingteng.com/m/ceming.aspx
-</pre>
+```
 
-<pre>
+```text
 http://www.gfname.com/app2/index.php
-</pre>
+```
 
-<pre>
+```text
 http://ceming.taijiyu.net/CeMing.aspx
-</pre>
+```
 
+## 自建 RustDesk
 
+### 下载 server
 
+```text
+https://github.com/rustdesk/rustdesk-server/releases/download/1.1.15/rustdesk-server-linux-amd64.zip
+```
 
-自建rustDesk
+开放端口，国内服务器需要打开防火墙：
 
-下载server
-<pre>
- https://github.com/rustdesk/rustdesk-server/releases/download/1.1.15/rustdesk-server-linux-amd64.zip
-</pre>
-
-开发端口、**国内服务器需要打开防火墙**
+```bash
 ufw allow 21115:21119/tcp
 ufw allow 21115:21119/udp
+```
 
-nano /etc/systemd/system/hbbs.service 
-<pre>
+### hbbs 服务
+
+编辑：
+
+```bash
+nano /etc/systemd/system/hbbs.service
+```
+
+配置：
+
+```ini
 [Unit]
 Description=RustDesk Signal Server (hbbs)
 After=network.target
@@ -355,11 +498,19 @@ NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target
-</pre>
+```
 
+### hbbr 服务
 
-nano /etc/systemd/system/hbbr.service 
-<pre>
+编辑：
+
+```bash
+nano /etc/systemd/system/hbbr.service
+```
+
+配置：
+
+```ini
 [Unit]
 Description=RustDesk Relay Server (hbbr)
 After=network.target
@@ -376,42 +527,59 @@ NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target
-</pre>
+```
 
+启动服务：
+
+```bash
 systemctl daemon-reexec
 systemctl enable hbbs hbbr
 systemctl start hbbs hbbr
+```
 
-开机启动
+设置开机启动：
+
+```bash
 sudo systemctl enable hbbs
 sudo systemctl enable hbbr
+```
 
-** id_ed25519  id_ed25519.pub 都要保存**
+注意：`id_ed25519`、`id_ed25519.pub` 都要保存。
 
+## 一键 DD Ubuntu
 
-一键DD ubuntu
-<pre>
+```bash
 curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
 
 bash reinstall.sh ubuntu 24.04 \
   --password '你的密码' \
   --ssh-port 22
-</pre>
+```
 
-xray
+## Xray
 
-<pre>
+安装：
+
+```bash
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+```
 
-      xray uuid
+生成配置所需信息：
 
-      xray x25519
-      
-</pre>
+```bash
+xray uuid
+xray x25519
+```
 
+编辑配置：
+
+```bash
 sudo nano /usr/local/etc/xray/config.json
+```
 
-<pre>
+配置示例：
+
+```json
 {
   "log": {
     "loglevel": "warning"
@@ -454,31 +622,34 @@ sudo nano /usr/local/etc/xray/config.json
     }
   ]
 }
-   
-</pre>
+```
 
+测试和启动：
+
+```bash
 xray run -test -config /usr/local/etc/xray/config.json
 
 sudo systemctl restart xray
 sudo systemctl enable xray
 sudo systemctl status xray
+```
 
+## 共享 443 端口
 
+SNI 分流搭建 Reality + XTLS-RPRX-Vision 操作记录。
 
+环境说明：
 
------------------
-
-
-共享443端口
-
-SNI 分流搭建 Reality + XTLS-RPRX-Vision 完整操作记录
-环境说明
-
+```text
 系统：Ubuntu/Debian
 Nginx：编译安装，路径 /usr/local/nginx/
 Xray：已安装，路径 /usr/local/bin/xray
 目标：443 端口 SNI 分流，Reality 流量给 Xray，网站流量给 Nginx
+```
 
+确认环境：
+
+```bash
 # 确认 Nginx 有 stream 模块
 nginx -V 2>&1 | grep -o 'with-stream[^ ]*'
 
@@ -488,10 +659,13 @@ grep -rn "listen.*443" /etc/nginx/
 # 确认 Xray 状态
 xray version
 systemctl status xray | head -5
+```
 
-原因： apt 安装的 Nginx，stream 是动态模块，需要手动安装并加载。
+原因：apt 安装的 Nginx，stream 是动态模块，需要手动安装并加载。
 
-<pre>
+### 安装并加载 stream 模块
+
+```bash
 # 第一步：安装动态模块包
 apt install -y libnginx-mod-stream
 
@@ -505,26 +679,25 @@ sed -i '1s/^/load_module \/usr\/lib\/nginx\/modules\/ngx_stream_module.so;\n/' \
 
 # 确认第一行正确
 head -3 /etc/nginx/nginx.conf
-</pre>
+```
 
+### 修改网站 Nginx 配置
 
-第三步：修改网站 Nginx 配置
 将网站的 443 监听改为本地 4443，每个网站配置文件都要执行：
 
-<pre>
-      # 替换 IPv4 监听
+```bash
+# 替换 IPv4 监听
 sed -i 's/listen 443 ssl http2;/listen 127.0.0.1:4443 ssl http2;/g' \
   /root/vhost/*.conf
 
 # 替换 IPv6 监听（如果有）— 注意：会被替换成和上面一样，需要删掉重复行
 sed -i 's/listen \[::\]:443 ssl http2;/listen 127.0.0.1:4443 ssl http2;/g' \
-   /root/vhost/*.conf
-</pre>
+  /root/vhost/*.conf
+```
 
+### 在 Nginx 主配置加 stream 块
 
-第四步：在 Nginx 主配置加 stream 块
-
-<pre>
+```bash
 cat >> /etc/nginx/nginx.conf << 'EOF'
 
 stream {
@@ -542,30 +715,43 @@ stream {
     }
 }
 EOF
-</pre>
+```
 
-第五步：修改 Xray 配置
-  "listen": "127.0.0.1",
-  "port": 8443,
+### 修改 Xray 配置
 
+```json
+"listen": "127.0.0.1",
+"port": 8443
+```
+
+重启服务：
+
+```bash
 systemctl restart xray
 nginx -s reload
+```
 
-# 1. 确认端口监听
+确认端口监听：
+
+```bash
 ss -tlnp | grep -E '443|4443|8443'
+```
 
+测试 SNI 分流：
 
-# 2. 测试 SNI 分流（替换为你的 VPS IP）
+```bash
+# 替换为你的 VPS IP，应该返回你自己的证书
 echo | openssl s_client -connect VPS_IP:443 \
   -servername 你的网站域名 2>&1 | grep "subject="
-# 应返回你自己的证书
 
+# 应返回微软的证书
 echo | openssl s_client -connect VPS_IP:443 \
   -servername www.microsoft.com 2>&1 | grep "subject="
-# 应返回微软的证书
+```
 
-apt 安装 Nginx 的完整操作顺序
-<pre>
+### apt 安装 Nginx 的完整操作顺序
+
+```bash
 # 1. 安装 stream 模块
 apt install -y libnginx-mod-stream
 
@@ -607,4 +793,18 @@ nginx -t && systemctl restart nginx && systemctl restart xray
 
 # 7. 确认端口
 ss -tlnp | grep -E '443|4443|8443'
- </pre>
+```
+
+## Quan X 订阅文件格式
+
+编辑：
+
+```bash
+nano real.conf
+```
+
+内容示例：
+
+```text
+vless=hzx1.xuanyuanhuangdi.org:8443, method=none, password=81b91428-1ce7-4c97-a38c-e504b564e45d, obfs=over-tls, obfs-host=www.microsoft.com, tls-verification=true, tls13=true, udp-relay=true, fast-open=true, reality-base64-pubkey=dCz1sHXLZIlyMLefjLRjTBxSOPNsgsv_GJgLrb8LnXY, reality-hex-shortid=aab433c585465f802, vless-flow=xtls-rprx-vision, tag=Reality
+```
